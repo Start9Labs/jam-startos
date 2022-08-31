@@ -1,0 +1,77 @@
+# To utilize the default config system built in the compat system image, this file is required. It defines the *structure* of the configuration file. These structured options display as changeable UI elements within the "Config" section of the service details page in the Embassy UI
+
+tor-address:
+  name: Network Tor Address
+  description: The Tor address for the network interface. 
+  type: pointer
+  subtype: package
+  package-id: jam
+  target: tor-address
+  interface: main
+lan-address:
+  name: Network LAN Address
+  description: The LAN address for the network interface. 
+  type: pointer
+  subtype: package
+  package-id: jam
+  target: lan-address
+  interface: main
+jm-wallet:
+  type: string
+  name: JAM Bitcoin Core Wallet
+  description: Bitcoin Core Wallet created for JAM
+  default: "jam_wallet"
+  nullable: false
+bitcoind:
+  type: union
+  name: Bitcoin Core
+  description: The Bitcoin Core node for JoinMarket to connect to
+  tag:
+    id: type
+    name: Type
+    description: |
+      - Internal: The Bitcoin Core service installed to your Embassy
+      - Internal Proxy: The Bitcoin Proxy service installed on your Embassy
+    variant-names:
+      internal: Internal
+      internal-proxy: Internal (Bitcoin Proxy)
+  default: internal
+  variants:
+    internal:
+      user:
+        type: pointer
+        name: RPC Username
+        description: The username for the RPC user for Bitcoin Core
+        subtype: package
+        package-id: bitcoind
+        target: config
+        selector: "$.rpc.username"
+        multi: false
+      password:
+        type: pointer
+        name: RPC Password
+        description: The password for the RPC user for Bitcoin Core
+        subtype: package
+        package-id: bitcoind
+        target: config
+        selector: "$.rpc.password"
+        multi: false
+    internal-proxy:
+      user:
+        type: pointer
+        name: RPC Username
+        description: The username for the RPC user allocated to JoinMarket
+        subtype: package
+        package-id: btc-rpc-proxy
+        target: config
+        multi: false
+        selector: '$.users.[?(@.name == "jam")].name'
+      password:
+        type: pointer
+        name: RPC Password
+        description: The password for the RPC user allocated to JoinMarket
+        subtype: package
+        package-id: btc-rpc-proxy
+        target: config
+        multi: false
+        selector: '$.users.[?(@.name == "jam")].password'

@@ -1,0 +1,85 @@
+- rule: '''users.*.name = "jam"'
+  description: 'Must have an RPC user named "jam"'
+  suggestions:
+    - PUSH:
+        to: "users"
+        value:
+          name: jam
+          allowed-calls: []
+    - SET:
+        var: 'users.[first(item => ''item.name = "jam")].password'
+        to-entropy:
+          charset: "a-z,A-Z,0-9"
+          len: 22
+- rule: '''users.[first(item => ''item.name = "jam")].allowed-calls.* = "getindexinfo"'
+  description: 'RPC user "jam" must have "getindexinfo" enabled'
+  suggestions:
+    - PUSH:
+        to: 'users.[first(item => ''item.name = "jam")].allowed-calls'
+        value: "getindexinfo"
+- rule: '''users.[first(item => ''item.name = "jam")].allowed-calls.* = "getblockcount"'
+  description: 'RPC user "jam" must have "getblockcount" enabled'
+  suggestions:
+    - PUSH:
+        to: 'users.[first(item => ''item.name = "jam")].allowed-calls'
+        value: "getblockcount"
+- rule: '''users.[first(item => ''item.name = "jam")].allowed-calls.* = "getchaintips"'
+  description: 'RPC user "jam" must have "getchaintips" enabled'
+  suggestions:
+    - PUSH:
+        to: 'users.[first(item => ''item.name = "jam")].allowed-calls'
+        value: "getchaintips"
+- rule: '''users.[first(item => ''item.name = "jam")].allowed-calls.* = "getmempoolinfo"'
+  description: 'RPC user "jam" must have "getmempoolinfo" enabled'
+  suggestions:
+    - PUSH:
+        to: 'users.[first(item => ''item.name = "jam")].allowed-calls'
+        value: "getmempoolinfo"
+- rule: '''users.[first(item => ''item.name = "jam")].allowed-calls.* = "getblockchaininfo"'
+  description: 'RPC user "jam" must have "getblockchaininfo" enabled'
+  suggestions:
+    - PUSH:
+        to: 'users.[first(item => ''item.name = "jam")].allowed-calls'
+        value: "getblockchaininfo"
+- rule: '''users.[first(item => ''item.name = "jam")].allowed-calls.* = "getblockhash"'
+  description: 'RPC user "jam" must have "getblockhash" enabled'
+  suggestions:
+    - PUSH:
+        to: 'users.[first(item => ''item.name = "jam")].allowed-calls'
+        value: "getblockhash"
+- rule: '''users.[first(item => ''item.name = "jam")].allowed-calls.* = "getblock"'
+  description: 'RPC user "jam" must have "getblock" enabled'
+  suggestions:
+    - PUSH:
+        to: 'users.[first(item => ''item.name = "jam")].allowed-calls'
+        value: "getblock"
+- rule: '''users.[first(item => ''item.name = "jam")].allowed-calls.* = "getmempoolentry"'
+  description: 'RPC user "jam" must have "getmempoolentry" enabled'
+  suggestions:
+    - PUSH:
+        to: 'users.[first(item => ''item.name = "jam")].allowed-calls'
+        value: "getmempoolentry"
+- rule: '''users.[first(item => ''item.name = "jam")].allowed-calls.* = "getrawtransaction"'
+  description: 'RPC user "jam" must have "getrawtransaction" enabled'
+  suggestions:
+    - PUSH:
+        to: 'users.[first(item => ''item.name = "jam")].allowed-calls'
+        value: "getrawtransaction"
+- rule: '''users.[first(item => ''item.name = "jam")].allowed-calls.* = "getrawmempool"'
+  description: 'RPC user "jam" must have "getrawmempool" enabled'
+  suggestions:
+    - PUSH:
+        to: 'users.[first(item => ''item.name = "jam")].allowed-calls'
+        value: "getrawmempool"
+- rule: '''users.[first(item => ''item.name = "jam")].allowed-calls.* = "gettxout"'
+  description: 'RPC user "jam" must have "gettxout" enabled'
+  suggestions:
+    - PUSH:
+        to: 'users.[first(item => ''item.name = "jam")].allowed-calls'
+        value: "gettxout"
+- rule: '''users.[first(item => ''item.name = "jam")].allowed-calls.* = "validateaddress"'
+  description: 'RPC user "jam" must have "validateaddress" enabled'
+  suggestions:
+    - PUSH:
+        to: 'users.[first(item => ''item.name = "jam")].allowed-calls'
+        value: "validateaddress"
