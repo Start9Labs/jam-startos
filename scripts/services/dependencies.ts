@@ -108,7 +108,9 @@ const checks: Array<Check> = [
 ];
 
 const matchBitcoindConfig = shape({
-  "rpc.enable": boolean
+  rpc: shape({
+    enable: boolean,
+  }),
 });
 
 export const dependencies: T.ExpectedExports.dependencies = {
@@ -141,7 +143,7 @@ export const dependencies: T.ExpectedExports.dependencies = {
     // deno-lint-ignore require-await
     async check(_effects, configInput) {
       const config = matchBitcoindConfig.unsafeCast(configInput);
-      if (!config['rpc.enable']) {
+      if (!config.rpc.enable) {
         return { error: 'Must have RPC enabled' };
       }
       return { result: null };
@@ -149,7 +151,7 @@ export const dependencies: T.ExpectedExports.dependencies = {
     // deno-lint-ignore require-await
     async autoConfigure(_effects, configInput) {
       const config = matchBitcoindConfig.unsafeCast(configInput);
-      config['rpc.enable'] = true;
+      config.rpc.enable = true;
       return { result: config };
     },
   },

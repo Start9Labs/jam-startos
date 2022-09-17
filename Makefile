@@ -11,7 +11,7 @@ all: verify
 verify: jam.s9pk $(S9PK_PATH)
 	embassy-sdk verify s9pk $(S9PK_PATH)
 
-install: all jam.s9pk 
+install: all 
 	embassy-cli package install jam.s9pk
 
 clean:

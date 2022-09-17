@@ -7,7 +7,7 @@ JAM is a web UI for JoinMarket with focus on user-friendliness. It aims to provi
 - [docker](https://docs.docker.com/get-docker)
 - [docker-buildx](https://docs.docker.com/buildx/working-with-buildx/)
 - [yq](https://mikefarah.gitbook.io/yq)
-- [deno](https://deno.land/)s
+- [deno](https://deno.land/)
 - [embassy-sdk](https://github.com/Start9Labs/embassy-os/tree/master/backend)
 - [make](https://www.gnu.org/software/make/)
 

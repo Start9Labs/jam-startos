@@ -1,11 +1,11 @@
 id: jam 
 title: JAM
-version: 0.0.10
-release-notes: Initial release to EmbassyOS
+version: 0.1.0
+release-notes: Initial release to EmbassyOS!
 license: mit
-wrapper-repo: "https://github.com/cryptodread/jam-wrapper"
-upstream-repo: "https://github.com/jam/jam-docker"
-support-site: "https://github.com/jam/jam-docker/issues"
+wrapper-repo: "https://github.com/Start9Labs/jam-wrapper"
+upstream-repo: "https://github.com/joinmarket-webui/jam-docker"
+support-site: "https://github.com/joinmarket-webui/jam-docker/issues"
 marketing-site: "https://t.me/JoinMarketWebUI"
 build: ["make"]
 description:
@@ -26,7 +26,7 @@ main:
   mounts:
     main: /root
 health-checks:
-  main:
+  web:
     name: JAM UI
     success-message: JAM is ready to visit in a web browser
     type: docker
@@ -63,25 +63,21 @@ interfaces:
     tor-config:
       port-mapping:
         80: "80"
-        28183: "28183"
-        27183: "27183"
+        8080: "8080"
     lan-config:
       443:
         ssl: true
         internal: 80
-      28183:
-        ssl: true
-        internal: 28183
-      27183:
-        ssl: true
-        internal: 27183
+      8080:
+        ssl: false
+        internal: 8080
     ui: true
     protocols:
       - tcp
       - http
 dependencies: 
   bitcoind:
-    version: ">=0.21.1.2 <=23.0.0"
+    version: ">=0.21.1.2 <=24.0.0"
     requirement:
       type: "opt-in"
       how: Can alternatively configure proxy or bitcoin core  node.
@@ -141,18 +137,4 @@ backup:
     mounts:
       BACKUP: "/mnt/backup"
       main: "/root/data"
-actions:
-  unlock-wallet:
-    name: Unlock Wallet
-    description: Unlocks wallet after JAM restarts
-    warning: Make sure you have your seed phrase backed up properly!
-    allowed-statuses:
-      - running
-    implementation:
-      type: docker
-      image: main
-      system: false
-      entrypoint: unlock-wallet.sh
-      args: []
-      inject: true
-      io-format: json
+

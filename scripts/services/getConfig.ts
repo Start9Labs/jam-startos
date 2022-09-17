@@ -19,10 +19,30 @@ export const getConfig: T.ExpectedExports.getConfig = compat.getConfig({
       "target": "lan-address",
       "interface": "main"
   },
+  "wallet-rpc-user": {
+    "type": "pointer",
+    "name": "RPC Username",
+    "description": "The username for Bitcoin Core's RPC interface",
+    "subtype": "package",
+    "package-id": "bitcoind",
+    "target": "config",
+    "multi": false,
+    "selector": "$.rpc.username"
+  },
+  "wallet-rpc-password": {
+    "type": "pointer",
+    "name": "RPC Password",
+    "description": "The password for Bitcoin Core's RPC interface",
+    "subtype": "package",
+    "package-id": "bitcoind",
+    "target": "config",
+    "multi": false,
+    "selector": "$.rpc.password"
+  },
   "username": {
     "type": "string",
     "name": "JAM Username",
-    "description": "Administrator password for Lightning Terminal",
+    "description": "Administrator username for JAM",
     "nullable": false,
     "copyable": true,
     "masked": false,
@@ -31,7 +51,7 @@ export const getConfig: T.ExpectedExports.getConfig = compat.getConfig({
   "password": {
     "type": "string",
     "name": "JAM Password",
-    "description": "Administrator password for Lightning Terminal",
+    "description": "Administrator password for JAM",
     "nullable": false,
     "copyable": true,
     "masked": true,
@@ -39,13 +59,6 @@ export const getConfig: T.ExpectedExports.getConfig = compat.getConfig({
       "charset": "a-z,A-Z,0-9",
       "len": 22
     }
-  },
-  "jm-wallet": {
-      "type": "string",
-      "name": "JAM Bitcoin Wallet",
-      "description": "Bitcoin Core Wallet created for JAM",
-      "default": "jam_wallet",
-      "nullable": false
   },
   "bitcoind": {
     "type": "union",
@@ -105,6 +118,33 @@ export const getConfig: T.ExpectedExports.getConfig = compat.getConfig({
           "multi": false,
           "selector": "$.users[?(@.name == \"jam\")].password"
         },
+      }
+    }
+  },
+  "advanced": {
+    "type": "object",
+    "name": "Advanced",
+    "description": "Advanced settings for JAM",
+    "spec": {
+      "fee-abs": {
+        "type": "number",
+        "name": "Absolute Fee Limit",
+        "description": "Maximum amount in satoshis you will pay for a collaborative transaction.\n",
+        "nullable": false,
+        "range": "[0,100000000]",
+        "integral": true,
+        "units": "satoshis",
+        "default": 3000000
+      },
+      "fee-rel": {
+        "type": "number",
+        "name": "Relative Fee Limit",
+        "description": "Maximum percentage of the total you will pay for a collaborative transaction\"\n",
+        "nullable": false,
+        "range": "[0,1]",
+        "integral": false,
+        "units": "percent (0 - 1)",
+        "default": 0.0003
       }
     }
   }

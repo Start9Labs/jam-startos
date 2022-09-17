@@ -1,5 +1,5 @@
-FROM ghcr.io/joinmarket-webui/joinmarket-webui-standalone:v0.0.10-clientserver-v0.9.6@sha256:12bba3c1761a277a7e642cd0e9c29c97cc73fb697dc8f652a4e57bd2f99d89f3
-RUN apt-get update && apt-get install -qq --no-install-recommends wget bash 
+FROM ghcr.io/joinmarket-webui/jam-standalone:latest
+RUN apt-get update && apt-get install -qq --no-install-recommends wget bash
 RUN wget https://github.com/mikefarah/yq/releases/download/v4.12.2/yq_linux_arm.tar.gz -O - |\
       tar xz && mv yq_linux_arm /usr/bin/yq
 
@@ -16,11 +16,15 @@ ENV JM_RPC_USER="bitcoin"
 ENV JM_RPC_PASSWORD=
 ENV APP_USER "joinmarket"
 ENV APP_PASSWORD "joinmarket"
-ENV JMWEBUI_JMWALLETD_HOST "jam.embassy"
-ENV JMWEBUI_JMWALLETD_API_PORT "28183"
-ENV JMWEBUI_JMWALLETD_WEBSOCKET_PORT "28283"
 ENV ENSURE_WALLET true
+ENV JM_NETWORK mainnet
+ENV REMOVE_LOCK_FILES true
+ENV RESTORE_DEFAULT_CONFIG true
+ENV jm_max_cj_fee_abs 300000
+ENV jm_max_cj_fee_rel 0.0003
 
+ADD jam-docker/standalone/supervisor-conf/ /supervisor-conf/
+ADD jam-docker/standalone/nginx/ /nginx/
 ADD jam-docker/standalone/autostart /
 ADD jam-docker/standalone/default.cfg /
 ADD jam-docker/standalone/torrc /
