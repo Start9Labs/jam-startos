@@ -19,7 +19,7 @@ export RPC_TYPE=$(yq e '.bitcoind.type' /root/start9/config.yaml)
 export JM_RPC_USER=$(yq e '.bitcoind.user' /root/start9/config.yaml)
 export JM_RPC_PASSWORD=$(yq e '.bitcoind.password' /root/start9/config.yaml)
 export JM_RPC_PORT=8332
-export JM_WALLET="embassy_wallet"
+export JM_WALLET="embassy_jam_wallet"
 export JM_HOST="jam.embassy"
 export JM_WALLET_RPC_USER=$(yq e '.wallet-rpc-user' /root/start9/config.yaml)
 export JM_WALLET_RPC_PASSWORD=$(yq e '.wallet-rpc-password' /root/start9/config.yaml)
@@ -32,6 +32,12 @@ if [ "$RPC_TYPE" = "internal-proxy" ]; then
 else
 	export JM_RPC_HOST="bitcoind.embassy"
 	echo "Running on Bitcoin Core..."
+fi
+
+if ! [ -f "/root/.joinmarket/joinmarket.cfg" ]; then
+  # Create Core Wallet using the Bitcoin Core Credentials. Trying to create a non descriptor wallet using the proxy credentials results in an error
+  echo "Creating Default Wallet..."
+  curl -sS --user $JM_WALLET_RPC_USER:$JM_WALLET_RPC_PASSWORD --data-binary '{"jsonrpc": "1.0", "id": "wallet-gen", "method": "createwallet", "params": {"wallet_name":"'$JM_WALLET'","descriptors":false}}' -H 'content-type: text/plain;' http://$JM_WALLET_RPC_HOST:8332/
 fi
 
 # # Configuring Webserver
