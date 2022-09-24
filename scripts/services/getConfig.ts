@@ -19,26 +19,6 @@ export const getConfig: T.ExpectedExports.getConfig = compat.getConfig({
       "target": "lan-address",
       "interface": "main"
   },
-  "wallet-rpc-user": {
-    "type": "pointer",
-    "name": "RPC Username",
-    "description": "The username for Bitcoin Core's RPC interface",
-    "subtype": "package",
-    "package-id": "bitcoind",
-    "target": "config",
-    "multi": false,
-    "selector": "$.rpc.username"
-  },
-  "wallet-rpc-password": {
-    "type": "pointer",
-    "name": "RPC Password",
-    "description": "The password for Bitcoin Core's RPC interface",
-    "subtype": "package",
-    "package-id": "bitcoind",
-    "target": "config",
-    "multi": false,
-    "selector": "$.rpc.password"
-  },
   "username": {
     "type": "string",
     "name": "JAM Username",
@@ -58,67 +38,6 @@ export const getConfig: T.ExpectedExports.getConfig = compat.getConfig({
     "default": {
       "charset": "a-z,A-Z,0-9",
       "len": 22
-    }
-  },
-  "bitcoind": {
-    "type": "union",
-    "name": "Bitcoin Core",
-    "description": "The Bitcoin Core node to connect to:\n  - internal: The Bitcoin Core or Proxy services installed to your Embassy\n",
-    "tag": {
-      "id": "type",
-      "name": "Type",
-      "variant-names": {
-        "internal": "Bitcoin Core",
-        "internal-proxy": "Bitcoin Proxy"
-      },
-      "description": "The Bitcoin Core node to connect to:\n  - internal: The Bitcoin Core and Proxy services installed to your Embassy\n"
-    },
-    "default": "internal-proxy",
-    "variants": {
-      "internal": {
-        "user": {
-          "type": "pointer",
-          "name": "RPC Username",
-          "description": "The username for Bitcoin Core's RPC interface",
-          "subtype": "package",
-          "package-id": "bitcoind",
-          "target": "config",
-          "multi": false,
-          "selector": "$.rpc.username"
-        },
-        "password": {
-          "type": "pointer",
-          "name": "RPC Password",
-          "description": "The password for Bitcoin Core's RPC interface",
-          "subtype": "package",
-          "package-id": "bitcoind",
-          "target": "config",
-          "multi": false,
-          "selector": "$.rpc.password"
-        }
-      },
-      "internal-proxy": {
-        "user": {
-          "type": "pointer",
-          "name": "RPC Username",
-          "description": "The username for the RPC user allocated to JAM",
-          "subtype": "package",
-          "package-id": "btc-rpc-proxy",
-          "target": "config",
-          "multi": false,
-          "selector": "$.users[?(@.name == \"jam\")].name"
-        },
-        "password": {
-          "type": "pointer",
-          "name": "RPC Password",
-          "description": "The password for the RPC user allocated to JAM",
-          "subtype": "package",
-          "package-id": "btc-rpc-proxy",
-          "target": "config",
-          "multi": false,
-          "selector": "$.users[?(@.name == \"jam\")].password"
-        },
-      }
     }
   },
   "advanced": {
@@ -145,6 +64,44 @@ export const getConfig: T.ExpectedExports.getConfig = compat.getConfig({
         "integral": false,
         "units": "percent (0 - 1)",
         "default": 0.0003
+      },
+      "bitcoind": {
+        "type": "union",
+        "name": "Bitcoin Core",
+        "description": "The Bitcoin Core node to connect to:\n  - internal: The Bitcoin Core or Proxy services installed to your Embassy\n",
+        "tag": {
+          "id": "type",
+          "name": "Type",
+          "variant-names": {
+            "internal": "Bitcoin Core"
+          },
+          "description": "The Bitcoin Core node to connect to:\n  - internal: The Bitcoin Core and Proxy services installed to your Embassy\n"
+        },
+        "default": "internal",
+        "variants": {
+          "internal": {
+            "user": {
+              "type": "pointer",
+              "name": "RPC Username",
+              "description": "The username for Bitcoin Core's RPC interface",
+              "subtype": "package",
+              "package-id": "bitcoind",
+              "target": "config",
+              "multi": false,
+              "selector": "$.rpc.username"
+            },
+            "password": {
+              "type": "pointer",
+              "name": "RPC Password",
+              "description": "The password for Bitcoin Core's RPC interface",
+              "subtype": "package",
+              "package-id": "bitcoind",
+              "target": "config",
+              "multi": false,
+              "selector": "$.rpc.password"
+            }
+          }
+        }
       }
     }
   }

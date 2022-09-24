@@ -2,43 +2,23 @@
 
 set -e
 
-_term() { 
-  echo "Caught SIGTERM signal!"
-  kill -TERM "$jm_child" 2>/dev/null
-  exit 0
-}
-
 # Setting env-vars
 mkdir -p /root/.joinmarket
 echo "Setting environment variables..."
-export APP_USER=$(yq e '.username' /root/start9/config.yaml)
-export APP_PASSWORD=$(yq e '.password' /root/start9/config.yaml)
 export TOR_HOST=$(yq e '.tor-address' /root/start9/config.yaml)
 export LAN_HOST=$(yq e '.lan-address' /root/start9/config.yaml)
-export RPC_TYPE=$(yq e '.bitcoind.type' /root/start9/config.yaml)
-export JM_RPC_USER=$(yq e '.bitcoind.user' /root/start9/config.yaml)
-export JM_RPC_PASSWORD=$(yq e '.bitcoind.password' /root/start9/config.yaml)
+export APP_USER=$(yq e '.username' /root/start9/config.yaml)
+export APP_PASSWORD=$(yq e '.password' /root/start9/config.yaml)
+export JM_RPC_USER=$(yq e '.advanced.bitcoind.user' /root/start9/config.yaml)
+export JM_RPC_PASSWORD=$(yq e '.advanced.bitcoind.password' /root/start9/config.yaml)
 export JM_RPC_PORT=8332
 export JM_WALLET="embassy_jam_wallet"
 export JM_HOST="jam.embassy"
-export JM_WALLET_RPC_USER=$(yq e '.wallet-rpc-user' /root/start9/config.yaml)
-export JM_WALLET_RPC_PASSWORD=$(yq e '.wallet-rpc-password' /root/start9/config.yaml)
-export JM_WALLET_RPC_HOST="bitcoind.embassy"
 export MAX_CJ_FEE_ABS=$(yq e '.advanced.fee-abs' /root/start9/config.yaml)
 export MAX_CJ_FEE_REL=$(yq e '.advanced.fee-rel' /root/start9/config.yaml)
-if [ "$RPC_TYPE" = "internal-proxy" ]; then
-	export JM_RPC_HOST="btc-rpc-proxy.embassy"
-	echo "Running on Bitcoin Proxy..."
-else
-	export JM_RPC_HOST="bitcoind.embassy"
-	echo "Running on Bitcoin Core..."
-fi
+export JM_RPC_HOST="bitcoind.embassy"
+echo "Running on Bitcoin Core..."
 
-if ! [ -f "/root/.joinmarket/joinmarket.cfg" ]; then
-  # Create Core Wallet using the Bitcoin Core Credentials. Trying to create a non descriptor wallet using the proxy credentials results in an error
-  echo "Creating Default Wallet..."
-  curl -sS --user $JM_WALLET_RPC_USER:$JM_WALLET_RPC_PASSWORD --data-binary '{"jsonrpc": "1.0", "id": "wallet-gen", "method": "createwallet", "params": {"wallet_name":"'$JM_WALLET'","descriptors":false}}' -H 'content-type: text/plain;' http://$JM_WALLET_RPC_HOST:8332/
-fi
 
 # # Configuring Webserver
 echo "Configuring JoinMarket..."
@@ -87,7 +67,5 @@ sed -i "s/jm_webui_default/$JM_WALLET/" /jam-entrypoint.sh
 # Starting JoinMarket API
 echo "Starting JoinMarket..."
 cd /src/scripts/
-/jam-entrypoint.sh
+exec tini -p SIGTERM /jam-entrypoint.sh 
 
-trap _term SIGTERM
-wait $jm_child

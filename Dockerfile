@@ -1,5 +1,5 @@
 FROM ghcr.io/joinmarket-webui/jam-standalone:latest
-RUN apt-get update && apt-get install -qq --no-install-recommends wget bash
+RUN apt-get update && apt-get install -qq --no-install-recommends wget bash tini
 RUN wget https://github.com/mikefarah/yq/releases/download/v4.12.2/yq_linux_arm.tar.gz -O - |\
       tar xz && mv yq_linux_arm /usr/bin/yq
 
