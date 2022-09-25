@@ -83,6 +83,9 @@ dependencies:
         type: script
       auto-configure:
         type: script
+alerts:
+  start: |
+    It may take some time for the JAM API to initialize over the Tor network, please be patient.
 migrations:
   from:
     "*":
