@@ -120,32 +120,5 @@ export const getConfig: T.ExpectedExports.getConfig = compat.getConfig({
         },
       }
     }
-  },
-  "advanced": {
-    "type": "object",
-    "name": "Advanced",
-    "description": "Advanced settings for JAM",
-    "spec": {
-      "fee-abs": {
-        "type": "number",
-        "name": "Absolute Fee Limit",
-        "description": "Maximum amount in satoshis you will pay for a collaborative transaction.\n",
-        "nullable": false,
-        "range": "[0,100000000]",
-        "integral": true,
-        "units": "satoshis",
-        "default": 3000000
-      },
-      "fee-rel": {
-        "type": "number",
-        "name": "Relative Fee Limit",
-        "description": "Maximum percentage of the total you will pay for a collaborative transaction\"\n",
-        "nullable": false,
-        "range": "[0,1]",
-        "integral": false,
-        "units": "percent (0 - 1)",
-        "default": 0.0003
-      }
-    }
   }
 });

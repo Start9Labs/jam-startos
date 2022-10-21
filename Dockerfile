@@ -18,8 +18,6 @@ ENV ENSURE_WALLET true
 ENV JM_NETWORK mainnet
 ENV REMOVE_LOCK_FILES true
 ENV RESTORE_DEFAULT_CONFIG true
-ENV jm_max_cj_fee_abs 300000
-ENV jm_max_cj_fee_rel 0.0003
 
 ADD jam-docker/standalone/supervisor-conf/ /supervisor-conf/
 ADD jam-docker/standalone/nginx/ /nginx/
