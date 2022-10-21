@@ -9,7 +9,6 @@ _term() {
 }
 
 # Setting env-vars
-mkdir -p /root/.joinmarket
 echo "Setting environment variables..."
 export APP_USER=$(yq e '.username' /root/start9/config.yaml)
 export APP_PASSWORD=$(yq e '.password' /root/start9/config.yaml)
