@@ -19,7 +19,6 @@ ENV JM_NETWORK mainnet
 ENV REMOVE_LOCK_FILES true
 ENV RESTORE_DEFAULT_CONFIG true
 
-ADD jam-docker/standalone/supervisor-conf/ /supervisor-conf/
 ADD jam-docker/standalone/nginx/ /nginx/
 ADD jam-docker/standalone/default.cfg /
 ADD jam-docker/standalone/torrc /

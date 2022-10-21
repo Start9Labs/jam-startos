@@ -46,7 +46,6 @@ sed -i "s/rpc_user =.*/rpc_user = $JM_RPC_USER/" /default.cfg
 sed -i "s/rpc_port =.*/rpc_port = $JM_RPC_PORT/" /default.cfg
 sed -i "s/rpc_password =.*/rpc_password = $JM_RPC_PASSWORD/" /default.cfg
 sed -i "s/rpc_wallet_file =.*/rpc_wallet_file = $JM_WALLET/" /default.cfg
-sed -i "s/exec supervisord.*/exec supervisord -c \/etc\/supervisor\/supervisord\.conf/" /jam-entrypoint.sh
 sed -i "s/jm_webui_default/$JM_WALLET/" /jam-entrypoint.sh
 
 # Properties Page showing password to be used for login
