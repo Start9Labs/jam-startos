@@ -74,7 +74,7 @@ interfaces:
       - http
 dependencies: 
   bitcoind:
-    version: ">=0.21.1.2 <=24.0.0"
+    version: ">=0.22.0 <=24.0.0"
     requirement:
       type: "opt-in"
       how: Can alternatively configure proxy or bitcoin core  node.
@@ -85,7 +85,7 @@ dependencies:
       auto-configure:
         type: script
   btc-rpc-proxy:
-    version: ">=0.3.2.1 <0.4.0"
+    version: ">=0.3.2.5 <0.4.0"
     requirement:
       type: "opt-out"
       how: Can alternatively configure proxy or bitcoin core  node.
