@@ -1,29 +1,35 @@
-ASSETS := $(shell yq e '.assets.[].src' manifest.yaml)
-ASSET_PATHS := $(addprefix assets/,$(ASSETS))
-VERSION := $(shell yq e ".version" manifest.yaml)
-S9PK_PATH=$(shell find . -name jam.s9pk -print)
+PKG_ID := $(shell yq e ".id" manifest.yaml)
+PKG_VERSION := $(shell yq e ".version" manifest.yaml)
+TS_FILES := $(shell find ./ -name \*.ts)
 
 # delete the target of a rule if it has changed and its recipe exits with a nonzero exit status
 .DELETE_ON_ERROR:
 
 all: verify
 
-verify: jam.s9pk $(S9PK_PATH)
-	embassy-sdk verify s9pk $(S9PK_PATH)
+verify: $(PKG_ID).s9pk
+	embassy-sdk verify s9pk $(PKG_ID).s9pk
 
-install: all 
-	embassy-cli package install jam.s9pk
+install: $(PKG_ID).s9pk
+	embassy-cli package install $(PKG_ID).s9pk
 
 clean:
-	rm -f jam.s9pk
+	rm -rf docker-images
 	rm -f image.tar
+	rm -f $(PKG_ID).s9pk
 	rm -f scripts/*.js
 
-jam.s9pk: manifest.yaml assets/compat/* image.tar scripts/embassy.js docs/instructions.md $(ASSET_PATHS)
-	embassy-sdk pack
-
-image.tar: Dockerfile docker_entrypoint.sh assets/utils/*
-	DOCKER_CLI_EXPERIMENTAL=enabled docker buildx build --tag start9/jam/main:$(VERSION) --platform=linux/arm64 -o type=docker,dest=image.tar .
-
-scripts/embassy.js: scripts/**/*.ts
+scripts/embassy.js: $(TS_FILES)
 	deno bundle scripts/embassy.ts scripts/embassy.js
+
+docker-images/x86_64.tar: Dockerfile docker_entrypoint.sh assets/utils/*
+	mkdir -p docker-images
+	docker buildx build --tag start9/$(PKG_ID)/main:$(PKG_VERSION) --platform=linux/amd64 --build-arg PLATFORM=amd64 -o type=docker,dest=docker-images/x86_64.tar .
+
+docker-images/aarch64.tar: Dockerfile docker_entrypoint.sh assets/utils/*
+	mkdir -p docker-images
+	docker buildx build --tag start9/$(PKG_ID)/main:$(PKG_VERSION) --platform=linux/arm64 --build-arg PLATFORM=arm64 -o type=docker,dest=docker-images/aarch64.tar .
+
+$(PKG_ID).s9pk: manifest.yaml instructions.md LICENSE icon.png scripts/embassy.js docker-images/aarch64.tar docker-images/x86_64.tar
+	if ! [ -z "$(ARCH)" ]; then cp docker-images/$(ARCH).tar image.tar; fi
+	embassy-sdk pack

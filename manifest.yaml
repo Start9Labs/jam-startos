@@ -1,6 +1,6 @@
 id: jam 
 title: JAM
-version: 0.1.0
+version: 0.1.2
 release-notes: Initial release to EmbassyOS!
 license: mit
 wrapper-repo: "https://github.com/Start9Labs/jam-wrapper"
@@ -16,15 +16,16 @@ description:
 assets:
   license: LICENSE
   icon: icon.png
-  instructions: docs/instructions.md
+  instructions: instructions.md
   docker-images: image.tar
 main:
   type: docker
   image: main
-  entrypoint: "docker_entrypoint.sh"
-  args: []
+  entrypoint: "tini"
+  args: ["-g", "--", "docker_entrypoint.sh"]
   mounts:
-    main: /root
+    main: /embassy
+    jam: /root/.joinmarket
 health-checks:
   web:
     name: JAM UI
@@ -54,8 +55,8 @@ properties:
 volumes:
   main:
     type: data
-  compat:
-    type: assets 
+  jam:
+    type: data
 interfaces:
   main:
     name: JAM Web UI
@@ -63,14 +64,10 @@ interfaces:
     tor-config:
       port-mapping:
         80: "80"
-        8080: "8080"
     lan-config:
       443:
         ssl: true
         internal: 80
-      8080:
-        ssl: false
-        internal: 8080
     ui: true
     protocols:
       - tcp
@@ -100,7 +97,7 @@ dependencies:
         type: script
 alerts:
   start: |
-    ⚠️ WARNING ⚠️  This is ALPHA software. Use with caution. 
+    It may take some time for the JAM API to initialize over the Tor network, please be patient. 
 migrations:
   from:
     "*":
@@ -120,10 +117,11 @@ backup:
       - duplicity
       - create
       - /mnt/backup
-      - /root/data
+      - /app/data
     mounts:
       BACKUP: "/mnt/backup" 
-      main: "/root/data"
+      main: "/app/data"
+      jam: "/root/.joinmarket"
   restore:
     type: docker
     image: compat
@@ -132,9 +130,10 @@ backup:
     args:
       - duplicity
       - restore
-      - /root/data
+      - /app/data
       - /mnt/backup
     mounts:
       BACKUP: "/mnt/backup"
-      main: "/root/data"
+      main: "/app/data"
+      jam: "/root/.joinmarket"
 
