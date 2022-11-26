@@ -1,3 +1,0 @@
-[submodule "jam-docker"]
-	path = jam-docker
-	url = https://github.com/joinmarket-webui/jam-docker.git

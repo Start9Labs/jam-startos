@@ -19,26 +19,6 @@ export const getConfig: T.ExpectedExports.getConfig = compat.getConfig({
       "target": "lan-address",
       "interface": "main"
   },
-  "wallet-rpc-user": {
-    "type": "pointer",
-    "name": "RPC Username",
-    "description": "The username for Bitcoin Core's RPC interface",
-    "subtype": "package",
-    "package-id": "bitcoind",
-    "target": "config",
-    "multi": false,
-    "selector": "$.rpc.username"
-  },
-  "wallet-rpc-password": {
-    "type": "pointer",
-    "name": "RPC Password",
-    "description": "The password for Bitcoin Core's RPC interface",
-    "subtype": "package",
-    "package-id": "bitcoind",
-    "target": "config",
-    "multi": false,
-    "selector": "$.rpc.password"
-  },
   "username": {
     "type": "string",
     "name": "JAM Username",
