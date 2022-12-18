@@ -1,4 +1,4 @@
-FROM ghcr.io/joinmarket-webui/jam-standalone:v0.1.3-clientserver-v0.9.8
+FROM ghcr.io/joinmarket-webui/jam-standalone:v0.1.4-clientserver-v0.9.8
 
 # arm64 or amd64
 ARG PLATFORM
