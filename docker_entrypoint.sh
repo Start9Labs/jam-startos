@@ -8,19 +8,12 @@ export APP_USER=$(yq e '.username' /embassy/start9/config.yaml)
 export APP_PASSWORD=$(yq e '.password' /embassy/start9/config.yaml)
 export TOR_HOST=$(yq e '.tor-address' /embassy/start9/config.yaml)
 export LAN_HOST=$(yq e '.lan-address' /embassy/start9/config.yaml)
-export RPC_TYPE=$(yq e '.bitcoind.type' /embassy/start9/config.yaml)
-export JM_RPC_USER=$(yq e '.bitcoind.user' /embassy/start9/config.yaml)
-export JM_RPC_PASSWORD=$(yq e '.bitcoind.password' /embassy/start9/config.yaml)
+export JM_RPC_USER=$(yq e '.bitcoind-user' /embassy/start9/config.yaml)
+export JM_RPC_PASSWORD=$(yq e '.bitcoind-password' /embassy/start9/config.yaml)
 export JM_RPC_PORT=8332
 export JM_RPC_WALLET_FILE="embassy_jam_wallet"
-
-if [ "$RPC_TYPE" = "internal-proxy" ]; then
-	export JM_RPC_HOST="btc-rpc-proxy.embassy"
-	echo "Running on Bitcoin Proxy..."
-else
-	export JM_RPC_HOST="bitcoind.embassy"
-	echo "Running on Bitcoin Core..."
-fi
+export JM_RPC_HOST="bitcoind.embassy"
+echo "Running on Bitcoin Core..."
 
 # Properties Page showing password to be used for login
   echo 'version: 2' > /embassy/start9/stats.yaml

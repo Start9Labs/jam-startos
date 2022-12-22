@@ -6,8 +6,7 @@ ARG PLATFORM
 ARG ARCH
 
 RUN apt-get update && apt-get install -qq --no-install-recommends wget bash tini
-RUN wget https://github.com/mikefarah/yq/releases/download/v4.6.3/yq_linux_${PLATFORM}.tar.gz -O - |\
-  tar xz && mv yq_linux_${PLATFORM} /usr/bin/yq
+RUN wget -qO /usr/local/bin/yq https://github.com/mikefarah/yq/releases/latest/download/yq_linux_${PLATFORM} && chmod +x /usr/local/bin/yq
 
 # USER root
 
