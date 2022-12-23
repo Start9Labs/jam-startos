@@ -8,7 +8,7 @@ license: mit
 wrapper-repo: "https://github.com/Start9Labs/jam-wrapper"
 upstream-repo: "https://github.com/joinmarket-webui/jam-docker"
 support-site: "https://github.com/joinmarket-webui/jam-docker/issues"
-marketing-site: "https://t.me/JoinMarketWebUI"
+marketing-site: "https://jamapp.org"
 build: ["make"]
 description:
   short: JAM - A friendly UI for JoinMarket 
