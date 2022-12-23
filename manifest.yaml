@@ -114,8 +114,8 @@ backup:
     args:
       - duplicity
       - restore
-      - /app/data
       - /mnt/backup
+      - /app/data
     mounts:
       BACKUP: "/mnt/backup"
       main: "/app/data"
