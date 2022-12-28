@@ -111,6 +111,9 @@ const matchBitcoindConfig = shape({
   rpc: shape({
     enable: boolean,
   }),
+  wallet: shape({
+    enable: boolean,
+  }),
 });
 
 export const dependencies: T.ExpectedExports.dependencies = {
@@ -146,12 +149,16 @@ export const dependencies: T.ExpectedExports.dependencies = {
       if (!config.rpc.enable) {
         return { error: 'Must have RPC enabled' };
       }
+      if (!config.wallet.enable) {
+        return { error: 'Must have Bitcoin core wallet loaded and wallet RPC calls enabled' };
+      }
       return { result: null };
     },
     // deno-lint-ignore require-await
     async autoConfigure(_effects, configInput) {
       const config = matchBitcoindConfig.unsafeCast(configInput);
       config.rpc.enable = true;
+      config.wallet.enable = true;
       return { result: config };
     },
   },
