@@ -2,7 +2,7 @@ id: jam
 title: JAM
 version: 0.1.5
 release-notes: |
-  * JAM v0.1.5 [Release Notes](https://github.com/joinmarket-webui/jam/releases/tag/v0.1.5)
+  * Update to latest upstream - [JAM v0.1.5 Release Notes](https://github.com/joinmarket-webui/jam/releases/tag/v0.1.5)
 license: mit
 wrapper-repo: "https://github.com/Start9Labs/jam-wrapper"
 upstream-repo: "https://github.com/joinmarket-webui/jam-docker"
