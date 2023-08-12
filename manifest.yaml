@@ -1,8 +1,8 @@
-id: jam 
+id: jam
 title: JAM
-version: 0.1.5
+version: 0.1.5.1
 release-notes: |
-  * Update to latest upstream - [JAM v0.1.5 Release Notes](https://github.com/joinmarket-webui/jam/releases/tag/v0.1.5)
+  * Fix JAM wallet backup restore
 license: mit
 wrapper-repo: "https://github.com/Start9Labs/jam-wrapper"
 upstream-repo: "https://github.com/joinmarket-webui/jam-docker"
@@ -10,7 +10,7 @@ support-site: "https://github.com/joinmarket-webui/jam-docker/issues"
 marketing-site: "https://jamapp.org"
 build: ["make"]
 description:
-  short: JAM - A friendly UI for JoinMarket 
+  short: JAM - A friendly UI for JoinMarket
   long: |
     Jam is a web UI for JoinMarket with focus on user-friendliness. 
     It aims to provide sensible defaults and be easy to use for beginners while still providing the features advanced users expect.
@@ -67,14 +67,14 @@ interfaces:
     protocols:
       - tcp
       - http
-dependencies: 
+dependencies:
   bitcoind:
     version: ">=0.23.0.1 <=26.0.0"
     requirement:
       type: required
     description: Used to subscribe to new block events from a full archival node.
     config:
-      check: 
+      check:
         type: script
       auto-configure:
         type: script
@@ -82,7 +82,7 @@ alerts:
   install: |
     WARNING: If you have an older version of JAM running, this install will stop all active liquidity offers. You will need to manually restart your offers after the install is complete.
   start: |
-    It may take some time for the JAM API to initialize over the Tor network, please be patient. 
+    It may take some time for the JAM API to initialize over the Tor network, please be patient.
 migrations:
   from:
     "*":
@@ -96,15 +96,15 @@ backup:
   create:
     type: docker
     image: compat
-    system: true 
-    entrypoint: compat 
-    args: 
+    system: true
+    entrypoint: compat
+    args:
       - duplicity
       - create
       - /mnt/backup
-      - /app/data
+      - /root
     mounts:
-      BACKUP: "/mnt/backup" 
+      BACKUP: "/mnt/backup"
       main: "/app/data"
       jam: "/root/.joinmarket"
   restore:
@@ -116,9 +116,8 @@ backup:
       - duplicity
       - restore
       - /mnt/backup
-      - /app/data
+      - /root
     mounts:
       BACKUP: "/mnt/backup"
       main: "/app/data"
       jam: "/root/.joinmarket"
-
