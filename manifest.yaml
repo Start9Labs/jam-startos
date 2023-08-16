@@ -2,7 +2,7 @@ id: jam
 title: JAM
 version: 0.1.5.1
 release-notes: |
-  * Fix JAM wallet backup restore
+  * Fix backup creation and restore processes.
 license: mit
 wrapper-repo: "https://github.com/Start9Labs/jam-wrapper"
 upstream-repo: "https://github.com/joinmarket-webui/jam-docker"
@@ -52,6 +52,8 @@ volumes:
     type: data
   jam:
     type: data
+  compat:
+    type: assets
 interfaces:
   main:
     name: JAM Web UI
@@ -97,27 +99,27 @@ backup:
     type: docker
     image: compat
     system: true
-    entrypoint: compat
+    entrypoint: /mnt/assets/backup.sh
     args:
-      - duplicity
       - create
-      - /mnt/backup
-      - /root
+      - /embassy/start9
+      - /root/.joinmarket
     mounts:
       BACKUP: "/mnt/backup"
-      main: "/app/data"
+      compat: "/mnt/assets"
+      main: "/embassy/start9"
       jam: "/root/.joinmarket"
   restore:
     type: docker
     image: compat
     system: true
-    entrypoint: compat
+    entrypoint: /mnt/assets/backup.sh
     args:
-      - duplicity
       - restore
-      - /mnt/backup
-      - /root
+      - /embassy/start9
+      - /root/.joinmarket
     mounts:
       BACKUP: "/mnt/backup"
-      main: "/app/data"
+      compat: "/mnt/assets"
+      main: "/embassy/start9"
       jam: "/root/.joinmarket"
