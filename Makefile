@@ -9,12 +9,12 @@ ASSET_PATHS := $(shell find ./assets/**/*)
 all: verify
 
 verify: $(PKG_ID).s9pk
-	@embassy-sdk verify s9pk $(PKG_ID).s9pk
+	@start-sdk verify s9pk $(PKG_ID).s9pk
 	@echo " Done!"
 	@echo "   Filesize: $(shell du -h $(PKG_ID).s9pk) is ready"
 
 install: $(PKG_ID).s9pk
-	embassy-cli package install $(PKG_ID).s9pk
+	start-cli package install $(PKG_ID).s9pk
 
 clean:
 	rm -rf docker-images
