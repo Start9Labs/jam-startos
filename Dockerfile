@@ -5,7 +5,8 @@ ARG PLATFORM
 # aarch64 or x86_64
 ARG ARCH
 
-RUN apt-get update && apt-get install -qq --no-install-recommends wget bash tini
+RUN sed -i "s|http://|https://|g" /etc/apt/sources.list /etc/apt/sources.list.d/* 
+RUN apt-get update && apt-get -y upgrade && apt-get install -y -qq --no-install-recommends wget bash tini
 RUN wget -qO /usr/local/bin/yq https://github.com/mikefarah/yq/releases/latest/download/yq_linux_${PLATFORM} && chmod +x /usr/local/bin/yq
 
 # USER root
