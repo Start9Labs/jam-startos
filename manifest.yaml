@@ -3,6 +3,7 @@ title: JAM
 version: 0.1.5.1
 release-notes: |
   * Fix backup creation and restore processes.
+  * Modify jmwalletd and obwatcher to run as independent unprivileged users
 license: mit
 wrapper-repo: "https://github.com/Start9Labs/jam-wrapper"
 upstream-repo: "https://github.com/joinmarket-webui/jam-docker"
@@ -24,8 +25,8 @@ main:
   entrypoint: "tini"
   args: ["-g", "--", "docker_entrypoint.sh"]
   mounts:
-    main: /embassy
-    jam: /root/.joinmarket
+    main: /data
+    jam: /data/.joinmarket
 health-checks:
   web-ui:
     name: JAM UI
@@ -83,8 +84,7 @@ dependencies:
 alerts:
   install: |
     WARNING: If you have an older version of JAM running, this install will stop all active liquidity offers. You will need to manually restart your offers after the install is complete.
-  start: |
-    It may take some time for the JAM API to initialize over the Tor network, please be patient.
+  start:
 migrations:
   from:
     "*":
@@ -102,13 +102,13 @@ backup:
     entrypoint: /mnt/assets/backup.sh
     args:
       - create
-      - /embassy/start9
-      - /root/.joinmarket
+      - /data/start9
+      - /data/.joinmarket
     mounts:
       BACKUP: "/mnt/backup"
       compat: "/mnt/assets"
-      main: "/embassy/start9"
-      jam: "/root/.joinmarket"
+      main: "/data/start9"
+      jam: "/data/.joinmarket"
   restore:
     type: docker
     image: compat
@@ -116,10 +116,10 @@ backup:
     entrypoint: /mnt/assets/backup.sh
     args:
       - restore
-      - /embassy/start9
-      - /root/.joinmarket
+      - /data/start9
+      - /data/.joinmarket
     mounts:
       BACKUP: "/mnt/backup"
       compat: "/mnt/assets"
-      main: "/embassy/start9"
-      jam: "/root/.joinmarket"
+      main: "/data/start9"
+      jam: "/data/.joinmarket"
