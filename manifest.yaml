@@ -1,8 +1,9 @@
-id: jam 
+id: jam
 title: JAM
-version: 0.1.5
+version: 0.1.6
 release-notes: |
-  * Update to latest upstream - [JAM v0.1.5 Release Notes](https://github.com/joinmarket-webui/jam/releases/tag/v0.1.5)
+  * Update to latest upstream - [JAM v0.1.6 Release Notes](https://github.com/joinmarket-webui/jam/releases/tag/v0.1.6)
+  * Fix backup creation and restore processes.
 license: mit
 wrapper-repo: "https://github.com/Start9Labs/jam-wrapper"
 upstream-repo: "https://github.com/joinmarket-webui/jam-docker"
@@ -10,7 +11,7 @@ support-site: "https://github.com/joinmarket-webui/jam-docker/issues"
 marketing-site: "https://jamapp.org"
 build: ["make"]
 description:
-  short: JAM - A friendly UI for JoinMarket 
+  short: JAM - A friendly UI for JoinMarket
   long: |
     Jam is a web UI for JoinMarket with focus on user-friendliness. 
     It aims to provide sensible defaults and be easy to use for beginners while still providing the features advanced users expect.
@@ -24,7 +25,7 @@ main:
   entrypoint: "tini"
   args: ["-g", "--", "docker_entrypoint.sh"]
   mounts:
-    main: /embassy
+    main: /data
     jam: /root/.joinmarket
 health-checks:
   web-ui:
@@ -52,6 +53,8 @@ volumes:
     type: data
   jam:
     type: data
+  compat:
+    type: assets
 interfaces:
   main:
     name: JAM Web UI
@@ -67,14 +70,14 @@ interfaces:
     protocols:
       - tcp
       - http
-dependencies: 
+dependencies:
   bitcoind:
     version: ">=0.23.0.1 <=26.0.0"
     requirement:
       type: required
     description: Used to subscribe to new block events from a full archival node.
     config:
-      check: 
+      check:
         type: script
       auto-configure:
         type: script
@@ -82,7 +85,7 @@ alerts:
   install: |
     WARNING: If you have an older version of JAM running, this install will stop all active liquidity offers. You will need to manually restart your offers after the install is complete.
   start: |
-    It may take some time for the JAM API to initialize over the Tor network, please be patient. 
+    It may take some time for the JAM API to initialize over the Tor network, please be patient.
 migrations:
   from:
     "*":
@@ -96,29 +99,28 @@ backup:
   create:
     type: docker
     image: compat
-    system: true 
-    entrypoint: compat 
-    args: 
-      - duplicity
+    system: true
+    entrypoint: /mnt/assets/backup.sh
+    args:
       - create
-      - /mnt/backup
-      - /app/data
+      - /data/start9
+      - /root/.joinmarket
     mounts:
-      BACKUP: "/mnt/backup" 
-      main: "/app/data"
+      BACKUP: "/mnt/backup"
+      compat: "/mnt/assets"
+      main: "/data/start9"
       jam: "/root/.joinmarket"
   restore:
     type: docker
     image: compat
     system: true
-    entrypoint: compat
+    entrypoint: /mnt/assets/backup.sh
     args:
-      - duplicity
       - restore
-      - /mnt/backup
-      - /app/data
+      - /data/start9
+      - /root/.joinmarket
     mounts:
       BACKUP: "/mnt/backup"
-      main: "/app/data"
+      compat: "/mnt/assets"
+      main: "/data/start9"
       jam: "/root/.joinmarket"
-
