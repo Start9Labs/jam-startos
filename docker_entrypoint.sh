@@ -35,4 +35,6 @@ echo "Running on Bitcoin Core..."
 
 # Starting JoinMarket API
 echo "Starting JoinMarket..."
-exec /jam-entrypoint.sh 
+
+/jam-entrypoint.sh &
+tail -F /var/log/jam/obwatch_stdout.log /var/log/jam/jmwallet_stdout.log /var/log/jam/tor_stdout.log

@@ -101,7 +101,7 @@ make
 Sideload from the web-UI via:
 System > Sideload Service
 
-...or SSH into an StartOS device.
+...or [SSH](https://docs.start9.com/latest/user-manual/overview/ssh) into your StartOS device.
 `scp` the `.s9pk` to any directory from your local machine.
 Run the following command to install the package:
 
