@@ -13,7 +13,7 @@ build: ["make"]
 description:
   short: JAM - A friendly UI for JoinMarket
   long: |
-    Jam is a web UI for JoinMarket with focus on user-friendliness. 
+    Jam is a web UI for JoinMarket with focus on user-friendliness.
     It aims to provide sensible defaults and be easy to use for beginners while still providing the features advanced users expect.
 assets:
   license: LICENSE
