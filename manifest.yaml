@@ -1,6 +1,6 @@
 id: jam
 title: JAM
-version: 0.1.6
+version: 0.1.6.1
 release-notes: |
   * Update to latest upstream - [JAM v0.1.6 Release Notes](https://github.com/joinmarket-webui/jam/releases/tag/v0.1.6)
   * Fix backup creation and restore processes.
