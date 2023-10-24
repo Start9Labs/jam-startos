@@ -4,6 +4,7 @@ version: 0.1.6.1
 release-notes: |
   * Update to latest upstream - [JAM v0.1.6 Release Notes](https://github.com/joinmarket-webui/jam/releases/tag/v0.1.6)
   * Fix backup creation and restore processes.
+  * Add jmwalletd, obwatcher and the JAM container's Tor logs to the JAM service's logs
 license: mit
 wrapper-repo: "https://github.com/Start9Labs/jam-wrapper"
 upstream-repo: "https://github.com/joinmarket-webui/jam-docker"
