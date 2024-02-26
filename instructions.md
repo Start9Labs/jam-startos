@@ -1,8 +1,9 @@
 ## Usage Instructions
 
-1. Open JAM by pressing the `LAUNCH UI` button.
-2. For the first time using JAM, you will need to setup your wallet credentials. You can set up as many JAM wallets as you like.
-3. Please visit the [JAM Docs Website](https://jamdocs.org/) for detailed documentation on using JAM.
+1. Start the JAM service and copy your username and password from Services > JAM > Properties
+2. Open JAM by pressing the `LAUNCH UI` button, authenticating with your username and password.
+3. For the first time using JAM, you will need to setup your wallet credentials. You can set up as many JAM wallets as you like.
+4. Please visit the [JAM Docs Website](https://jamdocs.org/) for detailed documentation on using JAM.
 
 For additional questions or support, please reach out [on telegram](https://t.me/JoinMarketWebUI).
 
