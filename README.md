@@ -38,8 +38,17 @@ docker run --privileged --rm linuxkit/binfmt:v0.8
 
 4. Install yq
 
+Ubuntu:
+
 ```
 sudo snap install yq
+```
+
+Debian:
+
+```
+PLATFORM=$(dpkg --print-architecture)
+wget -q https://github.com/mikefarah/yq/releases/latest/download/yq_linux_${PLATFORM} && sudo mv yq_linux_${PLATFORM} /usr/local/bin/yq && sudo chmod +x /usr/local/bin/yq
 ```
 
 5. Install essentials build packages
@@ -75,8 +84,8 @@ cd start-os/backend/
 Clone the project locally. Note the submodule link to the original project(s).
 
 ```
-git clone https://github.com/Start9Labs/jam-wrapper.git
-cd jam-wrapper
+git clone https://github.com/Start9Labs/jam-startos
+cd jam-startos
 git submodule update --init --recursive
 ```
 
