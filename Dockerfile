@@ -1,4 +1,4 @@
-FROM ghcr.io/joinmarket-webui/jam-standalone:v0.1.6-clientserver-v0.9.10
+FROM ghcr.io/joinmarket-webui/jam-standalone:v0.2.0-clientserver-v0.9.11
 
 # arm64 or amd64
 ARG PLATFORM
@@ -6,7 +6,9 @@ ARG PLATFORM
 ARG ARCH
 
 RUN sed -i "s|http://|https://|g" /etc/apt/sources.list /etc/apt/sources.list.d/* 
-RUN apt-get update && apt-get -y upgrade && apt-get install -y -qq --no-install-recommends wget bash tini
+RUN apt-get update && apt-get -qqy upgrade && apt-get install -qqy --no-install-recommends wget bash tini && \
+    rm -rf /var/lib/apt/lists/* /var/cache/apt/*
+
 RUN wget -qO /usr/local/bin/yq https://github.com/mikefarah/yq/releases/latest/download/yq_linux_${PLATFORM} && chmod +x /usr/local/bin/yq
 
 # USER root
