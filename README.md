@@ -77,6 +77,7 @@ cargo install toml-cli
 cd ~/ && git clone https://github.com/Start9Labs/start-os.git
 cd start-os/backend/
 ./install-sdk.sh
+start-sdk init
 ```
 
 ## Cloning
@@ -107,10 +108,11 @@ make
 
 ## Installing (on StartOS)
 
-Sideload from the web-UI via:
+Sideload from the web-UI:
 System > Sideload Service
 
-...or [SSH](https://docs.start9.com/latest/user-manual/overview/ssh) into your StartOS device.
+Sideload from the CLI:
+[SSH](https://docs.start9.com/latest/user-manual/overview/ssh) into your StartOS device.
 `scp` the `.s9pk` to any directory from your local machine.
 Run the following command to install the package:
 

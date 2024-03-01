@@ -11,7 +11,7 @@ export LAN_HOST=$(yq e '.lan-address' /data/start9/config.yaml)
 export JM_RPC_USER=$(yq e '.bitcoind-user' /data/start9/config.yaml)
 export JM_RPC_PASSWORD=$(yq e '.bitcoind-password' /data/start9/config.yaml)
 export JM_RPC_PORT=8332
-export JM_RPC_WALLET_FILE="embassy_jam_wallet"
+export JM_RPC_WALLET_FILE="jam_wallet_default"
 export JM_RPC_HOST="bitcoind.embassy"
 echo "Running on Bitcoin Core..."
 
