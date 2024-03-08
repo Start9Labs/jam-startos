@@ -1,9 +1,10 @@
 id: jam
 title: JAM
-version: 0.2.0
+version: 0.2.0.1
 release-notes: |
   * Update to latest jam-docker image upstream - [JAM v0.2.0 Release Notes](https://github.com/joinmarket-webui/jam/releases/tag/v0.2.0)
   * JAM v0.2.0 updates to latest JoinMarket ([v0.9.11](https://github.com/JoinMarket-Org/joinmarket-clientserver/blob/master/docs/release-notes/release-notes-0.9.11.md))
+  * Fix default wallet name regression in jam-startos v0.2.0
 license: MIT
 wrapper-repo: "https://github.com/Start9Labs/jam-wrapper"
 upstream-repo: "https://github.com/joinmarket-webui/jam-docker"
