@@ -1,6 +1,6 @@
-# Wrapper for JAM
+# Wrapper for Jam
 
-JAM is a web UI for JoinMarket with focus on user-friendliness. It aims to provide sensible defaults and be easy to use for beginners while still providing the features advanced users expect.
+Jam is a web UI for JoinMarket with focus on user-friendliness. It aims to provide sensible defaults and be easy to use for beginners while still providing the features advanced users expect.
 
 ## Dependencies
 
@@ -124,6 +124,6 @@ start-cli package install /path/to/jam.s9pk
 
 ## Verify Install
 
-Go to your StartOS Services page, select JAM and start the service.
+Go to your StartOS Services page, select Jam and start the service.
 
 #Done
