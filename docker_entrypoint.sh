@@ -21,14 +21,14 @@ echo "Running on Bitcoin Core..."
   echo '  Username: ' >> /data/start9/stats.yaml
         echo '    type: string' >> /data/start9/stats.yaml
         echo "    value: \"$APP_USER\"" >> /data/start9/stats.yaml
-        echo '    description: This is your username for JAM' >> /data/start9/stats.yaml
+        echo '    description: This is your username for Jam' >> /data/start9/stats.yaml
         echo '    copyable: true' >> /data/start9/stats.yaml
         echo '    masked: false' >> /data/start9/stats.yaml
         echo '    qr: false' >> /data/start9/stats.yaml
   echo '  Password: ' >> /data/start9/stats.yaml
         echo '    type: string' >> /data/start9/stats.yaml
         echo "    value: \"$APP_PASSWORD\"" >> /data/start9/stats.yaml
-        echo '    description: This is your password for JAM. Please use caution when sharing this password, you could lose your funds!' >> /data/start9/stats.yaml
+        echo '    description: This is your password for Jam. Please use caution when sharing this password, you could lose your funds!' >> /data/start9/stats.yaml
         echo '    copyable: true' >> /data/start9/stats.yaml
         echo '    masked: true' >> /data/start9/stats.yaml
         echo '    qr: false' >> /data/start9/stats.yaml

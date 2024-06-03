@@ -21,8 +21,8 @@ export const getConfig: T.ExpectedExports.getConfig = compat.getConfig({
   },
   username: {
     type: "string",
-    name: "JAM Username",
-    description: "Administrator username for JAM",
+    name: "Jam Username",
+    description: "Administrator username for Jam",
     nullable: false,
     copyable: true,
     masked: false,
@@ -30,8 +30,8 @@ export const getConfig: T.ExpectedExports.getConfig = compat.getConfig({
   },
   password: {
     type: "string",
-    name: "JAM Password",
-    description: "Administrator password for JAM",
+    name: "Jam Password",
+    description: "Administrator password for Jam",
     nullable: false,
     copyable: true,
     masked: true,

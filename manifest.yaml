@@ -1,9 +1,9 @@
 id: jam
-title: JAM
+title: Jam
 version: 0.2.0.1
 release-notes: |
-  * Update to latest jam-docker image upstream - [JAM v0.2.0 Release Notes](https://github.com/joinmarket-webui/jam/releases/tag/v0.2.0)
-  * JAM v0.2.0 updates to latest JoinMarket ([v0.9.11](https://github.com/JoinMarket-Org/joinmarket-clientserver/blob/master/docs/release-notes/release-notes-0.9.11.md))
+  * Update to latest jam-docker image upstream - [Jam v0.2.0 Release Notes](https://github.com/joinmarket-webui/jam/releases/tag/v0.2.0)
+  * Jam v0.2.0 updates to latest JoinMarket ([v0.9.11](https://github.com/JoinMarket-Org/joinmarket-clientserver/blob/master/docs/release-notes/release-notes-0.9.11.md))
   * Fix default wallet name regression in jam-startos v0.2.0
 license: MIT
 wrapper-repo: "https://github.com/Start9Labs/jam-wrapper"
@@ -12,7 +12,7 @@ support-site: "https://github.com/joinmarket-webui/jam-docker/issues"
 marketing-site: "https://jamapp.org"
 build: ["make"]
 description:
-  short: JAM - A friendly UI for JoinMarket
+  short: Jam - A friendly UI for JoinMarket
   long: |
     Jam is a web UI for JoinMarket with focus on user-friendliness.
     It aims to provide sensible defaults and be easy to use for beginners while still providing the features advanced users expect.
@@ -30,12 +30,12 @@ main:
     jam: /root/.joinmarket
 health-checks:
   web-ui:
-    name: JAM UI
-    success-message: JAM is ready to visit in a web browser
+    name: Jam UI
+    success-message: Jam is ready to visit in a web browser
     type: script
   api:
-    name: JAM API
-    success-message: The JAM API is accessible and responding
+    name: Jam API
+    success-message: The Jam API is accessible and responding
     type: docker
     image: main
     entrypoint: "check-api.sh"
@@ -58,7 +58,7 @@ volumes:
     type: assets
 interfaces:
   main:
-    name: JAM Web UI
+    name: Jam Web UI
     description: Specifies the interface to listen on for HTTP connections.
     tor-config:
       port-mapping:
@@ -84,9 +84,9 @@ dependencies:
         type: script
 alerts:
   install: |
-    WARNING: If you have an older version of JAM running, this install will stop all active liquidity offers. You will need to manually restart your offers after the install is complete.
+    WARNING: If you have an older version of Jam running, this install will stop all active liquidity offers. You will need to manually restart your offers after the install is complete.
   start: |
-    It may take some time for the JAM API to initialize over the Tor network, please be patient.
+    It may take some time for the Jam API to initialize over the Tor network, please be patient.
 migrations:
   from:
     "*":
