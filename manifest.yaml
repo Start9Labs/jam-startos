@@ -6,7 +6,7 @@ release-notes: |
   * Jam v0.2.0 updates to latest JoinMarket ([v0.9.11](https://github.com/JoinMarket-Org/joinmarket-clientserver/blob/master/docs/release-notes/release-notes-0.9.11.md))
   * Fix default wallet name regression in jam-startos v0.2.0
 license: MIT
-wrapper-repo: "https://github.com/Start9Labs/jam-wrapper"
+wrapper-repo: "https://github.com/Start9Labs/jam-startos"
 upstream-repo: "https://github.com/joinmarket-webui/jam-docker"
 support-site: "https://github.com/joinmarket-webui/jam-docker/issues"
 marketing-site: "https://jamapp.org"
