@@ -1,6 +1,6 @@
 # Wrapper for Jam
 
-Jam is a web UI for JoinMarket with focus on user-friendliness. It aims to provide sensible defaults and be easy to use for beginners while still providing the features advanced users expect.
+[Jam](https://github.com/joinmarket-webui/jam/) is a web UI for JoinMarket with focus on user-friendliness. It aims to provide sensible defaults and be easy to use for beginners while still providing the features advanced users expect.
 
 ## Dependencies
 
@@ -51,7 +51,7 @@ PLATFORM=$(dpkg --print-architecture)
 wget -q https://github.com/mikefarah/yq/releases/latest/download/yq_linux_${PLATFORM} && sudo mv yq_linux_${PLATFORM} /usr/local/bin/yq && sudo chmod +x /usr/local/bin/yq
 ```
 
-5. Install essentials build packages
+5. Install essential build packages
 
 ```
 sudo apt-get install -y build-essential openssl libssl-dev libc6-dev clang libclang-dev ca-certificates
@@ -75,7 +75,7 @@ cargo install toml-cli
 
 ```
 cd ~/ && git clone https://github.com/Start9Labs/start-os.git
-cd start-os/backend/
+cd core/
 ./install-sdk.sh
 start-sdk init
 ```
