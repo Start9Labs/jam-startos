@@ -2,7 +2,7 @@ id: jam
 title: Jam
 version: 0.2.0.2
 release-notes: |
-  * Rename app title from JAM to Jam
+  * Rename service's title from JAM to Jam
   * Bump allowed Bitcoin version
   * Copy touchups
 license: MIT
