@@ -75,6 +75,8 @@ cargo install toml-cli
 
 ```
 cd ~/ && git clone https://github.com/Start9Labs/start-os.git
+#checkout v0.3.5.1
+git checkout 39de098461833e4c56bd3509644ddf7f1a0fc4ca
 cd core/
 ./install-sdk.sh
 start-sdk init
