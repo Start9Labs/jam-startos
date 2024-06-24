@@ -7,7 +7,6 @@ ARG PLATFORM
 ARG ARCH
 
 RUN sed -i "s|http://|https://|g" /etc/apt/sources.list /etc/apt/sources.list.d/*
-RUN cat /usr/share/keyrings/nginx-archive-keyring.gpg
 RUN apt-get update && apt-get -qqy upgrade && apt-get install -qqy --no-install-recommends wget bash tini && \
     rm -rf /var/lib/apt/lists/* /var/cache/apt/*
 
