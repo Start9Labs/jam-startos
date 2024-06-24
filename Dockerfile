@@ -1,11 +1,12 @@
-FROM ghcr.io/joinmarket-webui/jam-standalone:v0.2.0-clientserver-v0.9.11
+#FROM ghcr.io/joinmarket-webui/jam-standalone:v0.2.0-clientserver-v0.9.11
+FROM ghcr.io/joinmarket-webui/jam-dev-standalone:v0.2.0-clientserver-v0.9.11-patch-20240622
 
 # arm64 or amd64
 ARG PLATFORM
 # aarch64 or x86_64
 ARG ARCH
 
-RUN sed -i "s|http://|https://|g" /etc/apt/sources.list /etc/apt/sources.list.d/* 
+RUN sed -i "s|http://|https://|g" /etc/apt/sources.list /etc/apt/sources.list.d/*
 RUN apt-get update && apt-get -qqy upgrade && apt-get install -qqy --no-install-recommends wget bash tini && \
     rm -rf /var/lib/apt/lists/* /var/cache/apt/*
 
