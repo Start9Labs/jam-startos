@@ -1,11 +1,8 @@
 id: jam
 title: Jam
-version: 0.2.0.2
+version: 0.3.0
 release-notes: |
-  * Rename service's title from JAM to Jam
-  * Bump allowed Bitcoin version
-  * Copy touchups
-  * Update nginx repo's PGP key in upstream Jam container
+  * Update Jam to [v0.3.0](https://github.com/joinmarket-webui/jam/releases/tag/v0.3.0) (via [jam-docker](https://github.com/joinmarket-webui/jam-docker))
 license: MIT
 wrapper-repo: "https://github.com/Start9Labs/jam-startos"
 upstream-repo: "https://github.com/joinmarket-webui/jam-docker"
