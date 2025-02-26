@@ -1,8 +1,8 @@
 id: jam
 title: Jam
-version: 0.3.0
+version: 0.3.0.1
 release-notes: |
-  * Update Jam to [v0.3.0](https://github.com/joinmarket-webui/jam/releases/tag/v0.3.0) (via [jam-docker](https://github.com/joinmarket-webui/jam-docker))
+  * Enable new & disable old JoinMarket pit servers: [Darkscience IRC is deprecated for JM users](https://github.com/JoinMarket-Org/joinmarket-clientserver/issues/1760)
 license: MIT
 wrapper-repo: "https://github.com/Start9Labs/jam-startos"
 upstream-repo: "https://github.com/joinmarket-webui/jam-docker"

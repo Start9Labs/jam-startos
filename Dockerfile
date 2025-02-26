@@ -11,14 +11,18 @@ RUN apt-get update && apt-get -qqy upgrade && apt-get install -qqy --no-install-
 
 RUN wget -qO /usr/local/bin/yq https://github.com/mikefarah/yq/releases/latest/download/yq_linux_${PLATFORM} && chmod +x /usr/local/bin/yq
 
+#Stop using darkscience IRC at their request
+# https://github.com/JoinMarket-Org/joinmarket-clientserver/issues/1760
+# ...and start using hackint as the secondary:
+RUN sed -i '192,208 s/^\s*#*/#/;224 s/^\s*#//;232,237 s/^\s*#//' /src/src/jmclient/configure.py
+
 # USER root
 
-ENV APP_USER "joinmarket"
-ENV APP_PASSWORD "joinmarket"
-ENV ENSURE_WALLET true
+ENV APP_USER="joinmarket"
+ENV ENSURE_WALLET=true
 
-ENV REMOVE_LOCK_FILES true
-ENV RESTORE_DEFAULT_CONFIG false
+ENV REMOVE_LOCK_FILES=true
+ENV RESTORE_DEFAULT_CONFIG=false
 
 ADD docker_entrypoint.sh /usr/local/bin/docker_entrypoint.sh
 ADD assets/utils/check-api.sh /usr/local/bin/check-api.sh
