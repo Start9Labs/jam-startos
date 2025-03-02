@@ -13,8 +13,8 @@ RUN wget -qO /usr/local/bin/yq https://github.com/mikefarah/yq/releases/latest/d
 
 #Stop using darkscience IRC at their request
 # https://github.com/JoinMarket-Org/joinmarket-clientserver/issues/1760
-# ...and start using hackint as the secondary:
-RUN sed -i '192,208 s/^\s*#*/#/;224 s/^\s*#//;232,237 s/^\s*#//' /src/src/jmclient/configure.py
+# ...and start using hackint as the secondary, in the default joinmarket config (which is copied to ~/.joinmarket/joinmarket.cfg if it doesn't exist, at startup):
+RUN sed -i '94,110 s/^\s*#*/#/;126,127 s/^\s*#\s*//;134,139 s/^\s*#//' /root/default.cfg
 
 # USER root
 
