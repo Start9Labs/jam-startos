@@ -12,7 +12,7 @@ export const migration: T.ExpectedExports.migration =
             };
           },
           true,
-          { version: "0.3.0.1", type: "up" }
+          { version: "<=0.3.0", type: "up" }
         ),
       },
     },
