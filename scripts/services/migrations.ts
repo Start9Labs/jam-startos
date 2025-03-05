@@ -7,8 +7,9 @@ export const migration: T.ExpectedExports.migration =
         up: compat.migrations.updateConfig(
           (config: any) => {
             return {
-              // [v0.3.0~1]: For any already-existing joinarmket config, disable Darkscience IRC and enable hackint for order book aggregation/making/taking
-              compat.run({ method: "exec", args: ["sed -i '94,110 s/^\s*#*/#/;126,127 s/^\s*#\s*//;134,139 s/^\s*#//' /root/.joinmarket/joinmarket.cfg"] });
+              // [v0.3.0~1]: As a clean means of changing IRC server preferences for order book aggregation,
+              // backup any already-existing joinarmket.cfg, inducing Jam to replace the user's preferences with a copy from /root/default.cfg
+              compat.run({ method: "exec", args: ["mv /root/.joinmarket/joinmarket.cfg /root/.joinmarket/joinmarket.old.cfg"] });
             };
           },
           true,
