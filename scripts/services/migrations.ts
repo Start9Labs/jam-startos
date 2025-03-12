@@ -9,7 +9,7 @@ export const migration: T.ExpectedExports.migration =
             return {
               // [v0.3.0~1]: As a clean means of changing IRC server preferences for order book aggregation,
               // backup any already-existing joinarmket.cfg, inducing Jam to replace the user's preferences with a copy from /root/default.cfg
-              compat.run({ method: "exec", args: ["mv /root/.joinmarket/joinmarket.cfg /root/.joinmarket/joinmarket.old.cfg"] });
+              compat.run({ method: "exec", args: ["bash /usr/local/bin/joinmarket.cfg_migration.sh"] });
             };
           },
           true,
