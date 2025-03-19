@@ -26,5 +26,4 @@ ENV RESTORE_DEFAULT_CONFIG=false
 
 ADD docker_entrypoint.sh /usr/local/bin/docker_entrypoint.sh
 ADD assets/utils/check-api.sh /usr/local/bin/check-api.sh
-Add assets/utils/joinmarket.cfg_migration.sh /usr/local/bin/joinmarket.cfg_migration.sh
 RUN chmod a+x /usr/local/bin/*.sh
