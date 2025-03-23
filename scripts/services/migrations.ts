@@ -1,4 +1,7 @@
 import { compat, types as T } from "../deps.ts";
+//import * as fs from "node:fs";
+//import { readFileSync, writeFileSync } from "fs";
+import { writeFile } from "node:fs/promises";
 
 export const migration: T.ExpectedExports.migration =
   compat.migrations.fromMapping(
@@ -6,18 +9,13 @@ export const migration: T.ExpectedExports.migration =
       "0.3.0.1": {
         up: compat.migrations.updateConfig(
           (config: any) => {
-            import * as fs from "fs";
-            import * as path from "path";
             // [v0.3.0~1]: As a clean means of changing IRC server preferences for order book aggregation,
             // backup any already-existing joinarmket.cfg, inducing Jam to replace the user's preferences with a copy from /root/default.cfg
-            const jmConfigPath = path.join(
-              "/root/.joinmarket",
-              "joinmarket.cfg"
-            );
+            const jmConfigPath = "/root/.joinmarket/joinmarket.cfg";
             const jmBackupConfigPath = `${jmConfigPath}.pre-v0.3.0~1.cfg`;
 
             // Copy the config file to backup
-            fs.copyFileSync(jmConfigPath, jmBackupConfigPath);
+            //fs.copyFileSync(jmConfigPath, jmBackupConfigPath);
 
             let count = 0;
             let range: string[] = [];
@@ -70,7 +68,12 @@ export const migration: T.ExpectedExports.migration =
                 }
               }
             }
-            fs.writeFileSync(jmBackupConfigPath, newJMConfig);
+            //fs.writeFileSync(jmBackupConfigPath, newJMConfig);
+            try {
+              await writeFile(jmBackupConfigPath, newJMConfig);
+            } catch (e) {
+              throw e;
+            }
           },
           true,
           { version: "0.3.0.1", type: "up" }
