@@ -1,29 +1,29 @@
 import { compat, types as T } from "../deps.ts";
-//import * as fs from "node:fs";
-//import { readFileSync, writeFileSync } from "fs";
-import { writeFile } from "node:fs/promises";
 
 export const migration: T.ExpectedExports.migration =
   compat.migrations.fromMapping(
     {
       "0.3.0.1": {
         up: compat.migrations.updateConfig(
-          (config: any) => {
+          async (config, effects) => {
             // [v0.3.0~1]: As a clean means of changing IRC server preferences for order book aggregation,
             // backup any already-existing joinarmket.cfg, inducing Jam to replace the user's preferences with a copy from /root/default.cfg
-            const jmConfigPath = "/root/.joinmarket/joinmarket.cfg";
-            const jmBackupConfigPath = `${jmConfigPath}.pre-v0.3.0~1.cfg`;
-
-            // Copy the config file to backup
-            //fs.copyFileSync(jmConfigPath, jmBackupConfigPath);
+            const jmConfigPath = "joinmarket.cfg";
 
             let count = 0;
-            let range: string[] = [];
-            const jmConfigContent = fs
-              .readFileSync(jmConfigPath, "utf8")
-              .split("\n");
+            const range: string[] = [];
+            let jmConfigContent: string[] = [];
 
-            for (let line of jmConfigContent) {
+            try {
+              jmConfigContent = (
+                await effects.readFile({ volumeId: "jam", path: jmConfigPath })
+              ).split("\n");
+            } catch (e) {
+              effects.error(e);
+              return { result: { configured: false } };
+            }
+
+            for (const line of jmConfigContent) {
               if (line.includes("IRC SERVER")) {
                 count++;
                 const startLineNumber = jmConfigContent.indexOf(line) + 1;
@@ -49,7 +49,7 @@ export const migration: T.ExpectedExports.migration =
             }
 
             let newJMConfig = "";
-            for (let r of range) {
+            for (const r of range) {
               const [start, end] = r.split(",").map((x) => parseInt(x));
 
               for (let i = start - 1; i < end; i++) {
@@ -68,16 +68,24 @@ export const migration: T.ExpectedExports.migration =
                 }
               }
             }
-            //fs.writeFileSync(jmBackupConfigPath, newJMConfig);
             try {
-              await writeFile(jmBackupConfigPath, newJMConfig);
+              await effects.writeFile({
+                volumeId: "jam",
+                path: `${jmConfigPath}.pre-v0.3.0~1.cfg`,
+                toWrite: newJMConfig,
+              });
             } catch (e) {
               throw e;
             }
+            return config;
           },
           true,
           { version: "0.3.0.1", type: "up" }
         ),
+        down: () => {
+          // TODO adjust if this is not true
+          throw new Error("Cannot downgrade this version");
+        },
       },
     },
     "0.3.0.1"
