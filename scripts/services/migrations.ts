@@ -5,7 +5,7 @@ export const migration: T.ExpectedExports.migration =
     {
       "0.3.0.1": {
         up: compat.migrations.updateConfig(
-          async (config, effects) => {
+          async (_config, effects) => {
             // [v0.3.0~1]: As a clean means of changing IRC server preferences for order book aggregation,
             // backup any already-existing joinarmket.cfg, inducing Jam to replace the user's preferences with a copy from /root/default.cfg
             const jmConfigPath = "joinmarket.cfg";
@@ -75,9 +75,11 @@ export const migration: T.ExpectedExports.migration =
                 toWrite: newJMConfig,
               });
             } catch (e) {
-              throw e;
+              effects.error(e);
+              return { result: { configured: false } };
             }
-            return config;
+            // TODO adjust if we do not want the service to be already configured
+            return { result: { configured: true } };
           },
           true,
           { version: "0.3.0.1", type: "up" }
