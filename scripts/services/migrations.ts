@@ -19,9 +19,9 @@ export const migration: T.ExpectedExports.migration =
                 await effects.readFile({ volumeId: "jam", path: jmConfigPath })
               ).split("\n");
             } catch (e) {
-              effects.error(e);
-              return { result: { configured: false } };
-            }
+                effects.error(e instanceof Error ? e.message : JSON.stringify(e));
+                return { result: { configured: false } };
+              }
 
             for (const line of jmConfigContent) {
               if (line.includes("IRC SERVER")) {
