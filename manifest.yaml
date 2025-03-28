@@ -73,7 +73,7 @@ interfaces:
       - http
 dependencies:
   bitcoind:
-    version: ">=0.23.0.1 <29.0.0"
+    version: ">=0.23.0.1 <30.0.0"
     requirement:
       type: required
     description: Used to subscribe to new block events from a full archival node.
