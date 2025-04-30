@@ -8,14 +8,13 @@ export const v_0_3_0_1 = VersionInfo.of({
   releaseNotes: 'Revamped for StartOS 0.4.0',
   migrations: {
     up: async ({ effects }) => {
-      const { username, password } = load(
+      const { password } = load(
         await readFile('/root/start9/config.yaml', 'utf-8'),
       ) as {
-        username: string
         password: string
       }
 
-      await sdk.store.setOwn(effects, sdk.StorePath, { username, password })
+      await sdk.store.setOwn(effects, sdk.StorePath.password, password)
 
       await rmdir('/root/start9')
     },

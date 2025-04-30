@@ -9,7 +9,7 @@ export const setInterfaces = sdk.setupInterfaces(async ({ effects }) => {
   const ui = sdk.createInterface(effects, {
     name: 'Web UI',
     id: 'ui',
-    description: 'The web interface of JAM',
+    description: 'The web interface of Jam',
     type: 'ui',
     masked: false,
     schemeOverride: null,

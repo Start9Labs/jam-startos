@@ -1,5 +1,6 @@
 import { utils } from '@start9labs/start-sdk'
 import { sdk } from '../sdk'
+import { APP_USER } from '../utils'
 
 export const resetPassword = sdk.Action.withoutInput(
   // id
@@ -43,9 +44,7 @@ export const resetPassword = sdk.Action.withoutInput(
             type: 'single',
             name: 'Username',
             description: null,
-            value: await sdk.store
-              .getOwn(effects, sdk.StorePath.username)
-              .once(),
+            value: APP_USER,
             masked: true,
             copyable: true,
             qr: false,

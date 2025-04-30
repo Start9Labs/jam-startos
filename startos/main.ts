@@ -1,7 +1,8 @@
 import { sdk } from './sdk'
 import { T } from '@start9labs/start-sdk'
-import { uiPort } from './utils'
+import { APP_USER, uiPort } from './utils'
 import { manifest } from 'bitcoind-startos/startos/manifest'
+import { joinmarketCfg } from './file-models/joinmarket.cfg'
 
 export const main = sdk.setupMain(async ({ effects, started }) => {
   /**
@@ -14,9 +15,32 @@ export const main = sdk.setupMain(async ({ effects, started }) => {
   const depResult = await sdk.checkDependencies(effects)
   depResult.throwIfNotSatisfied()
 
-  const { username, password } = await sdk.store
-    .getOwn(effects, sdk.StorePath)
-    .const()
+  const osIp = await sdk.getOsIp(effects)
+
+  await joinmarketCfg.merge(effects, {
+    'messaging:onion': {
+      socks5_host: osIp,
+    },
+    'messaging:hackint': {
+      socks5_host: osIp,
+    },
+  })
+
+  // read joinmarketCfg to restart service on change
+  await joinmarketCfg.read.const(effects)
+
+  const jamSub = await sdk.SubContainer.of(
+    effects,
+    { imageId: 'jam' },
+    sdk.Mounts.of()
+      .addVolume('main', null, '/root', false)
+      .addDependency<
+        typeof manifest
+      >('bitcoind', 'main', '/.bitcoin', '/.bitcoin', true),
+    'jam-sub',
+  )
+
+  await jamSub.execFail(['dinitctl', 'disable', 'tor'])
 
   /**
    * ======================== Additional Health Checks (optional) ========================
@@ -35,25 +59,13 @@ export const main = sdk.setupMain(async ({ effects, started }) => {
   return sdk.Daemons.of(effects, started, additionalChecks).addDaemon(
     'primary',
     {
-      subcontainer: await sdk.SubContainer.of(
-        effects,
-        { imageId: 'jam' },
-        sdk.Mounts.of()
-          .addVolume('main', null, '/data', false)
-          .addDependency<
-            typeof manifest
-          >('bitcoind', 'main', '/.bitcoin', '/.bitcoin', true),
-        'jam-sub',
-      ),
+      subcontainer: jamSub,
       command: ['/jam-entrypoint.sh'],
       env: {
-        APP_USER: username,
-        APP_PASSWORD: password,
-        JM_RPC_COOKIE_FILE: '.bitcoin/.cookie',
-        JM_RPC_PORT: '8332',
-        // @TODO can we change this?
-        JM_RPC_WALLET_FILE: 'embassy_jam_wallet',
-        JM_RPC_HOST: 'bitcoind.startos',
+        APP_USER,
+        APP_PASSWORD: await sdk.store
+          .getOwn(effects, sdk.StorePath.password)
+          .const(),
       },
       ready: {
         display: 'Web Interface',
