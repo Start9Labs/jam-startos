@@ -1,7 +1,7 @@
 import { VersionInfo, IMPOSSIBLE } from '@start9labs/start-sdk'
 import { readFile, rmdir } from 'fs/promises'
 import { load } from 'js-yaml'
-import { sdk } from '../sdk'
+import { store } from '../file-models/store.json'
 
 export const v_0_3_0_1 = VersionInfo.of({
   version: '0.3.0:1',
@@ -14,7 +14,7 @@ export const v_0_3_0_1 = VersionInfo.of({
         password: string
       }
 
-      await sdk.store.setOwn(effects, sdk.StorePath.password, password)
+      await store.write(effects, { password })
 
       await rmdir('/root/start9')
     },

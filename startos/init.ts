@@ -1,5 +1,4 @@
 import { sdk } from './sdk'
-import { exposedStore, initStore } from './store'
 import { setDependencies } from './dependencies'
 import { setInterfaces } from './interfaces'
 import { versions } from './versions'
@@ -16,7 +15,12 @@ const postInstall = sdk.setupPostInstall(async ({ effects }) => {
   await sdk.SubContainer.withTemp(
     effects,
     { imageId: 'jam' },
-    sdk.Mounts.of().addVolume('main', null, '/root', false),
+    sdk.Mounts.of().mountVolume({
+      volumeId: 'main',
+      subpath: null,
+      mountpoint: '/root',
+      readonly: false,
+    }),
     'jam-init',
     async (sub) => {
       await sub.execFail(['dinitctl', 'disable', 'tor'])
@@ -25,7 +29,7 @@ const postInstall = sdk.setupPostInstall(async ({ effects }) => {
 
       let cfgExists = false
       for (let i = 0; i < 10 && !cfgExists; i++) {
-        cfgExists = !!(await joinmarketCfg.read.once())
+        cfgExists = !!(await joinmarketCfg.read().once())
         await new Promise((resolve) => setTimeout(resolve, 4000))
       }
       if (!cfgExists) throw new Error('Failed to initialize Jam')
@@ -52,6 +56,4 @@ export const { packageInit, packageUninit, containerInit } = sdk.setupInit(
   setInterfaces,
   setDependencies,
   actions,
-  initStore,
-  exposedStore,
 )

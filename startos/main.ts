@@ -3,6 +3,7 @@ import { T } from '@start9labs/start-sdk'
 import { APP_USER, uiPort } from './utils'
 import { manifest } from 'bitcoind-startos/startos/manifest'
 import { joinmarketCfg } from './file-models/joinmarket.cfg'
+import { store } from './file-models/store.json'
 
 export const main = sdk.setupMain(async ({ effects, started }) => {
   /**
@@ -27,16 +28,29 @@ export const main = sdk.setupMain(async ({ effects, started }) => {
   })
 
   // read joinmarketCfg to restart service on change
-  await joinmarketCfg.read.const(effects)
+  await joinmarketCfg.read().const(effects)
+  const APP_PASSWORD = await store.read((s) => s.password).const(effects)
+  if (!APP_PASSWORD) {
+    throw new Error('APP_PASSWORD not set')
+  }
 
   const jamSub = await sdk.SubContainer.of(
     effects,
     { imageId: 'jam' },
     sdk.Mounts.of()
-      .addVolume('main', null, '/root', false)
-      .addDependency<
-        typeof manifest
-      >('bitcoind', 'main', '/.bitcoin', '/.bitcoin', true),
+      .mountVolume({
+        volumeId: 'main',
+        subpath: null,
+        mountpoint: '/root',
+        readonly: false,
+      })
+      .mountDependency<typeof manifest>({
+        dependencyId: 'bitcoind',
+        volumeId: 'main',
+        subpath: '/.bitcoin',
+        mountpoint: '/.bitcoin',
+        readonly: true,
+      }),
     'jam-sub',
   )
 
@@ -63,9 +77,7 @@ export const main = sdk.setupMain(async ({ effects, started }) => {
       command: ['/jam-entrypoint.sh'],
       env: {
         APP_USER,
-        APP_PASSWORD: await sdk.store
-          .getOwn(effects, sdk.StorePath.password)
-          .const(),
+        APP_PASSWORD,
       },
       ready: {
         display: 'Web Interface',
