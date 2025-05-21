@@ -1,7 +1,7 @@
 import { utils } from '@start9labs/start-sdk'
 import { sdk } from '../sdk'
 import { APP_USER } from '../utils'
-import { store } from '../file-models/store.json'
+import { store } from '../fileModels/store.json'
 
 export const resetPassword = sdk.Action.withoutInput(
   // id
