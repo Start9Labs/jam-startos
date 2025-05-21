@@ -2,8 +2,6 @@ import { VersionInfo, IMPOSSIBLE } from '@start9labs/start-sdk'
 import { readFile, rm } from 'fs/promises'
 import { load } from 'js-yaml'
 import { store } from '../../fileModels/store.json'
-import { sdk } from '../../sdk'
-import { resetPassword } from '../../actions/resetPassword'
 
 export const v_0_3_0_1 = VersionInfo.of({
   version: '0.3.0:1',
@@ -20,7 +18,7 @@ export const v_0_3_0_1 = VersionInfo.of({
         await store.write(effects, { password: yaml.password })
       }
 
-      await rm('/root/start9', { recursive: true })
+      await rm('/root/start9', { recursive: true }).catch(console.error)
     },
     down: IMPOSSIBLE,
   },
