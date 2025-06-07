@@ -72,10 +72,12 @@ export const main = sdk.setupMain(async ({ effects, started }) => {
     'primary',
     {
       subcontainer: jamSub,
-      command: ['/jam-entrypoint.sh'],
-      env: {
-        APP_USER,
-        APP_PASSWORD,
+      exec: {
+        command: ['/jam-entrypoint.sh'],
+        env: {
+          APP_USER,
+          APP_PASSWORD,
+        },
       },
       ready: {
         display: 'Web Interface',

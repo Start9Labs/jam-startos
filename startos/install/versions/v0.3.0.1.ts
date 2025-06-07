@@ -8,7 +8,12 @@ export const v_0_3_0_1 = VersionInfo.of({
   releaseNotes: 'Revamped for StartOS 0.4.0',
   migrations: {
     up: async ({ effects }) => {
-      const yaml = load(await readFile('/root/start9/config.yaml', 'utf-8')) as
+      const yaml = load(
+        await readFile(
+          '/media/startos/volumes/main/start9/config.yaml',
+          'utf-8',
+        ),
+      ) as
         | {
             password?: string
           }
@@ -18,7 +23,9 @@ export const v_0_3_0_1 = VersionInfo.of({
         await store.write(effects, { password: yaml.password })
       }
 
-      await rm('/root/start9', { recursive: true }).catch(console.error)
+      await rm('/media/startos/volumes/main/start9', { recursive: true }).catch(
+        console.error,
+      )
     },
     down: IMPOSSIBLE,
   },

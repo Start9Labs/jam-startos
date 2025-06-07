@@ -2,7 +2,9 @@ import { joinmarketCfg } from '../fileModels/joinmarket.cfg'
 import { sdk } from '../sdk'
 import { configDefaults } from '../utils'
 
-export const setup = sdk.setupOnInstall(async (effects) => {
+export const setup = sdk.setupOnInit(async (effects, kind) => {
+  if (kind !== 'install') return
+
   await sdk.SubContainer.withTemp(
     effects,
     { imageId: 'jam' },
