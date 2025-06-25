@@ -13,7 +13,7 @@ RUN wget -qO /usr/local/bin/yq https://github.com/mikefarah/yq/releases/latest/d
 
 # USER root
 
-ENV APP_USER "joinmarket"
+ENV APP_USER="joinmarket"
 ENV ENSURE_WALLET=true
 
 ENV REMOVE_LOCK_FILES=true
