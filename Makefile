@@ -22,8 +22,16 @@ clean:
 	rm -f $(PKG_ID).s9pk
 	rm -f scripts/*.js
 
+# for rebuilding just the arm image. will include docker-images/x86_64.tar into the s9pk if it exists
+arm: docker-images/aarch64.tar scripts/embassy.js
+	start-sdk pack
+
+# for rebuilding just the x86 image. will include docker-images/aarch64.tar into the s9pk if it exists
+x86: docker-images/x86_64.tar scripts/embassy.js
+	start-sdk pack
+
 scripts/embassy.js: $(TS_FILES)
-	deno bundle scripts/embassy.ts scripts/embassy.js
+	deno run --allow-read --allow-write --allow-env --allow-net scripts/bundle.ts
 
 docker-images/x86_64.tar: Dockerfile docker_entrypoint.sh assets/utils/*
 	mkdir -p docker-images
