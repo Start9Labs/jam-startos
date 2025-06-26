@@ -1,4 +1,6 @@
-jam.s9pk
+*.s9pk
 image.tar
 scripts/*.js
 docker-images/
+.vscode/*
+node_modules
