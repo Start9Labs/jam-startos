@@ -3,8 +3,6 @@ title: Jam
 version: 0.4.0
 release-notes: |
   * Update Jam to [v0.4.0](https://github.com/joinmarket-webui/jam/releases/tag/v0.4.0) (via [jam-docker](https://github.com/joinmarket-webui/jam-docker))
-  * Enable newer (hackint) & disable old (Darkscience) JoinMarket pit servers, to enhance join abilities and order book view:
-    [Darkscience IRC is now deprecated for JM users](https://github.com/JoinMarket-Org/joinmarket-clientserver/issues/1760)
   * Wrapper package maintenance around Deno v2
 license: MIT
 wrapper-repo: "https://github.com/Start9Labs/jam-startos"
