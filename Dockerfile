@@ -22,3 +22,7 @@ ENV RESTORE_DEFAULT_CONFIG=false
 ADD docker_entrypoint.sh /usr/local/bin/docker_entrypoint.sh
 ADD assets/utils/check-api.sh /usr/local/bin/check-api.sh
 RUN chmod a+x /usr/local/bin/*.sh
+
+#Copy config w/ new default settings to the default config, and also copy it over all users' current config
+ADD assets/config/joinmarket.cfg /root/default.cfg
+ADD assets/config/joinmarket.cfg /root/.joinmarket/joinmarket.cfg
