@@ -25,4 +25,4 @@ RUN chmod a+x /usr/local/bin/*.sh
 
 #Copy config w/ new default settings to the default config, and also copy it over all users' current config
 ADD assets/config/joinmarket.cfg /root/default.cfg
-ADD assets/config/joinmarket.cfg /root/.joinmarket/joinmarket.cfg
+ADD assets/config/joinmarket.cfg /root/default_start9_joinmarket.cfg
