@@ -39,9 +39,9 @@ echo "Starting JoinMarket..."
 #If we have a new default config to deploy, replace the user's current joinmarket.cfg with the new defaults
 if [ -r /root/default_start9_joinmarket.cfg ] ; then
  if [ -r /root/.joinmarket/joinmarket.cfg ] ; then
-  cp /root/.joinmarket/joinmarket.cfg /root/.joinmarket/joinmarket.cfg.bak
+  cp -f /root/.joinmarket/joinmarket.cfg /root/.joinmarket/joinmarket.cfg.bak
  fi
- mv /root/default_start9_joinmarket.cfg /root/.joinmarket/joinmarket.cfg
+ mv -f /root/default_start9_joinmarket.cfg /root/.joinmarket/joinmarket.cfg
 fi
 
 #In case the Bitcoin RPC username and password changed since the last start of Jam:
