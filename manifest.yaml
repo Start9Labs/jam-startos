@@ -1,9 +1,9 @@
 id: jam
 title: Jam
-version: 0.4.0
+version: 0.4.1
 release-notes: |
-  * Update Jam to [v0.4.0](https://github.com/joinmarket-webui/jam/releases/tag/v0.4.0) (via [jam-docker](https://github.com/joinmarket-webui/jam-docker))
-  * Ship new defaults for orderbook IRC server, and orderbook directory servers as listed in this [JoinMarket issue](https://github.com/JoinMarket-Org/joinmarket-clientserver/issues/1445) due to recent unavailability of the default directory servers
+  * Update Jam to [v0.4.1](https://github.com/joinmarket-webui/jam/releases/tag/v0.4.1) (via [jam-docker](https://github.com/joinmarket-webui/jam-docker))
+  * Ships new defaults for orderbook servers due to recent unavailability of JoinMarket's default directory servers
   * When JAM starts, respond to any recent changes in Bitcoin's RPC settings
   * Wrapper package maintenance around Deno v2
 license: MIT

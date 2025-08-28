@@ -1,4 +1,4 @@
-FROM ghcr.io/joinmarket-webui/jam-standalone:v0.4.0-clientserver-v0.9.11
+FROM ghcr.io/joinmarket-webui/jam-standalone:v0.4.1-clientserver-v0.9.11
 
 # arm64 or amd64
 ARG PLATFORM
@@ -25,6 +25,3 @@ ADD docker_entrypoint.sh /usr/local/bin/docker_entrypoint.sh
 ADD assets/utils/check-api.sh /usr/local/bin/check-api.sh
 RUN chmod a+x /usr/local/bin/*.sh
 
-#Copy config w/ new default settings to the default config, and also copy it over all users' current config
-ADD assets/config/joinmarket.cfg /root/default.cfg
-ADD assets/config/joinmarket.cfg /root/default_start9_joinmarket.cfg
