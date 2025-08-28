@@ -24,4 +24,4 @@ ADD assets/utils/check-api.sh /usr/local/bin/check-api.sh
 RUN chmod a+x /usr/local/bin/*.sh
 
 #Lay the groundwork for overwriting the user's joinmarket.cfg with Jam's new defaults
-RUN cp /root/default.cfg /root/default_start9_joinmarket.cfg
+RUN cp /root/default.cfg /root/default_startos_joinmarket.cfg
