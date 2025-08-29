@@ -1,5 +1,5 @@
 import { sdk } from './sdk'
-import { T } from '@start9labs/start-sdk'
+import { FileHelper, T } from '@start9labs/start-sdk'
 import { APP_USER, uiPort } from './utils'
 import { manifest } from 'bitcoind-startos/startos/manifest'
 import { joinmarketCfg } from './fileModels/joinmarket.cfg'
@@ -19,16 +19,17 @@ export const main = sdk.setupMain(async ({ effects, started }) => {
   const osIp = await sdk.getOsIp(effects)
 
   await joinmarketCfg.merge(effects, {
-    'messaging:onion': {
+    'MESSAGING:onion': {
       socks5_host: osIp,
     },
-    'messaging:hackint': {
+    'MESSAGING:hackint': {
       socks5_host: osIp,
     },
   })
 
   // read joinmarketCfg to restart service on change
-  await joinmarketCfg.read().const(effects)
+  const config = await joinmarketCfg.read().const(effects)
+  if (!config) throw new Error('joinmarket config not found!')
 
   const APP_PASSWORD = (await store.read((s) => s.password).const(effects))!
 
@@ -39,27 +40,23 @@ export const main = sdk.setupMain(async ({ effects, started }) => {
       .mountVolume({
         volumeId: 'main',
         subpath: null,
-        mountpoint: '/root',
+        mountpoint: '/root/.joinmarket',
         readonly: false,
       })
       .mountDependency<typeof manifest>({
         dependencyId: 'bitcoind',
         volumeId: 'main',
-        subpath: '/.bitcoin',
+        subpath: null,
         mountpoint: '/.bitcoin',
         readonly: true,
       }),
     'jam-sub',
   )
 
-  await jamSub.execFail(['dinitctl', 'disable', 'tor'])
-
-  /**
-   * ======================== Additional Health Checks (optional) ========================
-   *
-   * In this section, we define *additional* health checks beyond those included with each daemon (below).
-   */
-  const additionalChecks: T.HealthCheck[] = []
+  // Restart if cookie changes
+  // await FileHelper.string(`${jamSub.rootfs}/.bitcoin/.cookie`)
+  //   .read()
+  //   .const(effects)
 
   /**
    * ======================== Daemons ========================
@@ -68,26 +65,29 @@ export const main = sdk.setupMain(async ({ effects, started }) => {
    *
    * Each daemon defines its own health check, which can optionally be exposed to the user.
    */
-  return sdk.Daemons.of(effects, started, additionalChecks).addDaemon(
-    'primary',
-    {
-      subcontainer: jamSub,
-      exec: {
-        command: ['/jam-entrypoint.sh'],
-        env: {
-          APP_USER,
-          APP_PASSWORD,
-        },
+  return sdk.Daemons.of(effects, started).addDaemon('primary', {
+    subcontainer: jamSub,
+    exec: {
+      command: ['/jam-entrypoint.sh'],
+      env: {
+        APP_USER,
+        APP_PASSWORD,
+        JM_RPC_HOST: config.BLOCKCHAIN.rpc_host,
+        JM_RPC_PORT: config.BLOCKCHAIN.rpc_port,
+        JM_RPC_WALLET_FILE: config.BLOCKCHAIN.rpc_wallet_file,
+        ENSURE_WALLET: 'true',
+        REMOVE_LOCK_FILES: 'true',
+        RESTORE_DEFAULT_CONFIG: 'false',
       },
-      ready: {
-        display: 'Web Interface',
-        fn: () =>
-          sdk.healthCheck.checkPortListening(effects, uiPort, {
-            successMessage: 'The web interface is ready',
-            errorMessage: 'The web interface is not ready',
-          }),
-      },
-      requires: [],
     },
-  )
+    ready: {
+      display: 'Web Interface',
+      fn: () =>
+        sdk.healthCheck.checkPortListening(effects, uiPort, {
+          successMessage: 'The web interface is ready',
+          errorMessage: 'The web interface is not ready',
+        }),
+    },
+    requires: [],
+  })
 })
