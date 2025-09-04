@@ -5,7 +5,7 @@ import { sdk } from '../sdk'
 export const taskSetPassword = sdk.setupOnInit(async (effects) => {
   if (!(await store.read((s) => s.password).const(effects))) {
     await sdk.action.createOwnTask(effects, resetPassword, 'critical', {
-      reason: 'Create you Jam password',
+      reason: 'Create your Jam password',
     })
   }
 })
