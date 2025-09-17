@@ -7,6 +7,7 @@ export const configDefaults = {
     rpc_port: '8332',
     rpc_wallet_file: 'embassy_jam_wallet',
     rpc_host: 'bitcoind.startos',
+    rpc_cookie_file: '/.bitcoin/.cookie',
   },
 } as const
 

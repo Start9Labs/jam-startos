@@ -54,9 +54,9 @@ export const main = sdk.setupMain(async ({ effects, started }) => {
   )
 
   // Restart if cookie changes
-  // await FileHelper.string(`${jamSub.rootfs}/.bitcoin/.cookie`)
-  //   .read()
-  //   .const(effects)
+  await FileHelper.string(`${jamSub.rootfs}/.bitcoin/.cookie`)
+    .read()
+    .const(effects)
 
   /**
    * ======================== Daemons ========================
@@ -74,6 +74,7 @@ export const main = sdk.setupMain(async ({ effects, started }) => {
         APP_PASSWORD,
         JM_RPC_HOST: config.BLOCKCHAIN.rpc_host,
         JM_RPC_PORT: config.BLOCKCHAIN.rpc_port,
+        JM_RPC_COKIE_FILE: config.BLOCKCHAIN.rpc_cookie_file,
         JM_RPC_WALLET_FILE: config.BLOCKCHAIN.rpc_wallet_file,
         ENSURE_WALLET: 'true',
         REMOVE_LOCK_FILES: 'true',

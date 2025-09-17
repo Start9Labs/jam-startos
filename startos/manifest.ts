@@ -25,7 +25,7 @@ export const manifest = setupManifest({
     jam: {
       source: {
         dockerTag:
-          'ghcr.io/joinmarket-webui/jam-standalone:v0.3.0-clientserver-v0.9.11',
+          'ghcr.io/joinmarket-webui/jam-dev-standalone:master@sha256:74173a587d2e0226478d3a856c768debaeac990b2064294d9839037e793fc671',
       },
       arch,
     } as SDKImageInputSpec,

@@ -4,7 +4,7 @@ import { configDefaults } from '../utils'
 const { object, literal, string } = matches
 
 const {
-  BLOCKCHAIN: { rpc_port, rpc_wallet_file, rpc_host },
+  BLOCKCHAIN: { rpc_port, rpc_wallet_file, rpc_host, rpc_cookie_file },
 } = configDefaults
 
 const shape = object({
@@ -12,8 +12,7 @@ const shape = object({
     rpc_port: literal(rpc_port).onMismatch(rpc_port),
     rpc_wallet_file: literal(rpc_wallet_file).onMismatch(rpc_wallet_file),
     rpc_host: literal(rpc_host).onMismatch(rpc_host),
-    rpc_user: string,
-    rpc_password: string,
+    rpc_cookie_file: literal(rpc_cookie_file).onMismatch(rpc_cookie_file),
   }),
   'MESSAGING:onion': object({
     socks5_host: string,

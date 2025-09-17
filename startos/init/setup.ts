@@ -49,8 +49,7 @@ export const setup = sdk.setupOnInit(async (effects, kind) => {
       await joinmarketCfg.merge(effects, {
         BLOCKCHAIN: {
           ...configDefaults,
-          rpc_user: 'jam',
-          rpc_password: password,
+          rpc_cookie_file: rpc_cookie_file,
         },
       })
     },
