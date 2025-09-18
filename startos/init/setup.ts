@@ -20,24 +20,6 @@ export const setup = sdk.setupOnInit(async (effects, kind) => {
     }),
     'jam-init',
     async (sub) => {
-      // await sub.execFail(['dinitctl', 'disable', 'tor'])
-      await sdk.action.createTask(
-        effects,
-        'bitcoind',
-        generateRpcUserDependent,
-        'critical',
-        {
-          input: {
-            kind: 'partial',
-            value: {
-              username: 'jam',
-              password,
-            },
-          },
-          reason: "Jam needs credentials to access Bitcoin's RPC",
-        },
-      )
-
       await sub.spawn(['/jam-entrypoint.sh'])
 
       let cfgExists = false
