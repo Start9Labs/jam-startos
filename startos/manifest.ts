@@ -43,10 +43,12 @@ export const manifest = setupManifest({
   },
   dependencies: {
     bitcoind: {
-      description:
-        'Used to subscribe to new block events from a full archival node',
+      description: 'Used to subscribe to new block events.',
       optional: false,
-      s9pk: 'https://github.com/Start9Labs/bitcoind-startos/releases/download/v28.1.0.3-alpha.8/bitcoind.s9pk',
+      metadata: {
+        title: 'A Bitcoin Full Node',
+        icon: 'https://bitcoin.org/img/icons/opengraph.png',
+      },
     },
   },
 })
