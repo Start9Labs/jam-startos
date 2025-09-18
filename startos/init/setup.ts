@@ -47,10 +47,7 @@ export const setup = sdk.setupOnInit(async (effects, kind) => {
       }
       if (!cfgExists) throw new Error('Failed to initialize Jam')
       await joinmarketCfg.merge(effects, {
-        BLOCKCHAIN: {
-          ...configDefaults,
-          rpc_cookie_file: rpc_cookie_file,
-        },
+        BLOCKCHAIN: configDefaults.BLOCKCHAIN,
       })
     },
   )
