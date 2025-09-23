@@ -8,11 +8,11 @@ export APP_USER=$(yq e '.username' /data/start9/config.yaml)
 export APP_PASSWORD=$(yq e '.password' /data/start9/config.yaml)
 export TOR_HOST=$(yq e '.tor-address' /data/start9/config.yaml)
 export LAN_HOST=$(yq e '.lan-address' /data/start9/config.yaml)
-export BC_RPC_USER=$(yq e '.bitcoind-user' /data/start9/config.yaml)
-export BC_RPC_PASSWORD=$(yq e '.bitcoind-password' /data/start9/config.yaml)
+export JM_RPC_USER=$(yq e '.bitcoind-user' /data/start9/config.yaml)
+export JM_RPC_PASSWORD=$(yq e '.bitcoind-password' /data/start9/config.yaml)
+export JM_RPC_HOST="bitcoind.embassy"
 export JM_RPC_PORT=8332
 export JM_RPC_WALLET_FILE="embassy_jam_wallet"
-export JM_RPC_HOST="bitcoind.embassy"
 echo "Running on Bitcoin Core..."
 
 # Properties Page showing password to be used for login
@@ -43,10 +43,6 @@ if [ -r /root/default_startos_joinmarket.cfg ] ; then
  fi
  mv -f /root/default_startos_joinmarket.cfg /root/.joinmarket/joinmarket.cfg
 fi
-
-#In case the Bitcoin RPC username and password changed since the last start of Jam:
-sed -i "s|^#\?\s*rpc_user = .*|rpc_user = ${BC_RPC_USER}|" /root/.joinmarket/joinmarket.cfg
-sed -i "s|^#\?\s*rpc_password = .*|rpc_password = ${BC_RPC_PASSWORD}|" /root/.joinmarket/joinmarket.cfg
 
 /jam-entrypoint.sh &
 tail -F /var/log/jam/obwatch_stdout.log /var/log/jam/jmwallet_stdout.log /var/log/jam/tor_stdout.log
