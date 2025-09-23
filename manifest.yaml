@@ -1,11 +1,12 @@
 id: jam
 title: Jam
-version: 0.4.1
+version: 0.4.1.1
 release-notes: |
   * Update Jam to [v0.4.1](https://github.com/joinmarket-webui/jam/releases/tag/v0.4.1) (via [jam-docker](https://github.com/joinmarket-webui/jam-docker))
   * Ships new defaults for orderbook servers due to recent unavailability of JoinMarket's default directory servers
   * When Jam starts, respond to any recent changes in Bitcoin's RPC settings
   * Wrapper package maintenance around Deno v2
+  * v0.4.1~1: fix wrapper bug introduced in v0.4.1 with respect to default wallet name and creation of new wallets
 license: MIT
 wrapper-repo: "https://github.com/Start9Labs/jam-startos"
 upstream-repo: "https://github.com/joinmarket-webui/jam-docker"
