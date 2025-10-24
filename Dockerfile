@@ -6,10 +6,11 @@ ARG PLATFORM
 ARG ARCH
 
 RUN sed -i "s|http://|https://|g" /etc/apt/sources.list.d/*
-RUN apt-get update && \
-    apt-get -qqy upgrade && \
-    apt-get install -qqy --no-install-recommends wget bash tini && \
-    rm -rf /var/lib/apt/lists/* /var/cache/apt/*
+RUN apt-get update
+RUN apt-get -qqy upgrade
+RUN apt-get install -qqy --no-install-recommends wget bash tini
+RUN apt-get clean
+RUN rm -rf /var/lib/apt/lists/* /var/cache/apt/*
 
 RUN wget -qO /usr/local/bin/yq https://github.com/mikefarah/yq/releases/latest/download/yq_linux_${PLATFORM} && chmod +x /usr/local/bin/yq
 
@@ -20,6 +21,3 @@ ENV RESTORE_DEFAULT_CONFIG=false
 ADD docker_entrypoint.sh /usr/local/bin/docker_entrypoint.sh
 ADD assets/utils/check-api.sh /usr/local/bin/check-api.sh
 RUN chmod a+x /usr/local/bin/*.sh
-
-#Lay the groundwork for overwriting the user's joinmarket.cfg with Jam's new defaults
-RUN cp /root/default.cfg /root/default_startos_joinmarket.cfg

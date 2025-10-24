@@ -36,12 +36,10 @@ echo "Running on Bitcoin Core..."
 # Starting JoinMarket API
 echo "Starting JoinMarket..."
 
-#If we have new defaults to deploy, backup and then replace the user's current joinmarket.cfg with the new file
-if [ -r /root/default_startos_joinmarket.cfg ] ; then
- if [ -r /root/.joinmarket/joinmarket.cfg ] ; then
-  cp -f /root/.joinmarket/joinmarket.cfg /root/.joinmarket/joinmarket.cfg.bak
- fi
- mv -f /root/default_startos_joinmarket.cfg /root/.joinmarket/joinmarket.cfg
+#If the user has come from a previous version of Jam (joinmarket.cfg exists, but no backup exists of the previous config), back up their previous config and replace it with the newly-shipped defaults in Jam v0.4.1
+if [ ! -f /root/.joinmarket/joinmarket.cfg.bak ] && [ -f /root/.joinmarket/joinmarket.cfg ] ; then
+ cp -f /root/.joinmarket/joinmarket.cfg /root/.joinmarket/joinmarket.cfg.bak
+ cp -f /root/default.cfg /root/.joinmarket/joinmarket.cfg
 fi
 
 /jam-entrypoint.sh &
