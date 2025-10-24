@@ -6,11 +6,10 @@ ARG PLATFORM
 ARG ARCH
 
 RUN sed -i "s|http://|https://|g" /etc/apt/sources.list.d/*
-RUN apt-get update
-RUN apt-get -qqy upgrade
-RUN apt-get install -qqy --no-install-recommends wget bash tini
-RUN apt-get clean
-RUN rm -rf /var/lib/apt/lists/* /var/cache/apt/*
+RUN apt-get update && \
+    apt-get -qqy upgrade && \
+    apt-get install -qqy --no-install-recommends wget bash tini && \
+    rm -rf /var/lib/apt/lists/* /var/cache/apt/*
 
 RUN wget -qO /usr/local/bin/yq https://github.com/mikefarah/yq/releases/latest/download/yq_linux_${PLATFORM} && chmod +x /usr/local/bin/yq
 
