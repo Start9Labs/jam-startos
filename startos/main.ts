@@ -47,14 +47,14 @@ export const main = sdk.setupMain(async ({ effects, started }) => {
         dependencyId: 'bitcoind',
         volumeId: 'main',
         subpath: null,
-        mountpoint: '/.bitcoin',
+        mountpoint: '/mnt/bitcoind',
         readonly: true,
       }),
     'jam-sub',
   )
 
   // Restart if cookie changes
-  await FileHelper.string(`${jamSub.rootfs}/.bitcoin/.cookie`)
+  await FileHelper.string(`${jamSub.rootfs}/mnt/bitcoind/.cookie`)
     .read()
     .const(effects)
 
