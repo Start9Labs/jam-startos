@@ -1,6 +1,6 @@
 export const uiPort = 80
 
-export const APP_USER = 'root'
+export const APP_USER = 'jam'
 
 export const configDefaults = {
   BLOCKCHAIN: {
