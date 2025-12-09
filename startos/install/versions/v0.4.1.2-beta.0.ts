@@ -25,15 +25,7 @@ export const v_0_4_1_2_beta0 = VersionInfo.of({
         await store.write(effects, { password: yaml.password })
       }
 
-      const conf = await joinmarketCfg.read().once()
-
-      if (!conf) {
-        console.log("No existing joinmarket.cfg. Writing defaults...")
-        await joinmarketCfg.write(effects, configDefaults)
-      } else {
-        console.log("Using existing joinmarket.cfg")
-      }
-
+      await joinmarketCfg.write(effects, configDefaults)
     },
     down: IMPOSSIBLE,
   },

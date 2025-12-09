@@ -1,5 +1,5 @@
 import { sdk } from './sdk'
-import { FileHelper, T } from '@start9labs/start-sdk'
+import { FileHelper } from '@start9labs/start-sdk'
 import { APP_USER, uiPort } from './utils'
 import { manifest } from 'bitcoind-startos/startos/manifest'
 import { joinmarketCfg } from './fileModels/joinmarket.cfg'
@@ -38,7 +38,7 @@ export const main = sdk.setupMain(async ({ effects, started }) => {
     { imageId: 'jam' },
     sdk.Mounts.of()
       .mountVolume({
-        volumeId: 'main',
+        volumeId: 'jam',
         subpath: null,
         mountpoint: '/root/.joinmarket',
         readonly: false,
@@ -68,7 +68,7 @@ export const main = sdk.setupMain(async ({ effects, started }) => {
   return sdk.Daemons.of(effects, started).addDaemon('primary', {
     subcontainer: jamSub,
     exec: {
-      command: ['/jam-entrypoint.sh'],
+      command: sdk.useEntrypoint(),
       env: {
         APP_USER,
         APP_PASSWORD,

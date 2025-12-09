@@ -4,7 +4,6 @@ import { setInterfaces } from '../interfaces'
 import { versionGraph } from '../install/versionGraph'
 import { actions } from '../actions'
 import { restoreInit } from '../backups'
-import { setup } from './setup'
 import { taskSetPassword } from './taskSetPassword'
 
 export const init = sdk.setupInit(
@@ -13,7 +12,6 @@ export const init = sdk.setupInit(
   setInterfaces,
   setDependencies,
   actions,
-  setup,
   taskSetPassword,
 )
 
