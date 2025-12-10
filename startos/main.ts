@@ -38,6 +38,12 @@ export const main = sdk.setupMain(async ({ effects, started }) => {
     { imageId: 'jam' },
     sdk.Mounts.of()
       .mountVolume({
+        volumeId: 'main',
+        subpath: null,
+        mountpoint: '/data',
+        readonly: false,
+      })
+      .mountVolume({
         volumeId: 'jam',
         subpath: null,
         mountpoint: '/root/.joinmarket',

@@ -25,7 +25,7 @@ const shape = object({
 export const joinmarketCfg = FileHelper.ini(
   {
     volumeId: 'jam',
-    subpath: 'joinmarket.cfg',
+    subpath: './joinmarket.cfg',
   },
   shape,
 )

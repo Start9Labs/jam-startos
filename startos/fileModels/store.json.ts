@@ -7,6 +7,6 @@ const shape = object({
 })
 
 export const store = FileHelper.json(
-  { volumeId: 'jam', subpath: '/store.json' },
+  { volumeId: 'main', subpath: './store.json' },
   shape,
 )

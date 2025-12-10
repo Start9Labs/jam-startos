@@ -20,7 +20,7 @@ export const manifest = setupManifest({
     short: 'A web user interface for JoinMarket.',
     long: 'Jam is a web interface for JoinMarket focusing on user-friendliness and ease-of-use. It aims to provide sensible defaults and be easy to use for beginners while still having the features advanced users expect.',
   },
-  volumes: ['jam'],
+  volumes: ['main', 'jam'],
   images: {
     jam: {
       source: {
