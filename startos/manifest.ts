@@ -1,10 +1,4 @@
 import { setupManifest } from '@start9labs/start-sdk'
-import { SDKImageInputSpec } from '@start9labs/start-sdk/base/lib/types/ManifestTypes'
-
-const BUILD = process.env.BUILD || ''
-
-const arch =
-  BUILD === 'x86_64' || BUILD === 'aarch64' ? [BUILD] : ['x86_64', 'aarch64']
 
 export const manifest = setupManifest({
   id: 'jam',
@@ -27,11 +21,7 @@ export const manifest = setupManifest({
         dockerTag:
           'ghcr.io/joinmarket-webui/jam-dev-standalone:master@sha256:74173a587d2e0226478d3a856c768debaeac990b2064294d9839037e793fc671',
       },
-      arch,
-    } as SDKImageInputSpec,
-  },
-  hardwareRequirements: {
-    arch,
+    },
   },
   alerts: {
     install: null,
