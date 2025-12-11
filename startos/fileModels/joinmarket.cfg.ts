@@ -9,11 +9,11 @@ const {
 
 const shape = object({
   BLOCKCHAIN: object({
-    rpc_port: literal(rpc_port).onMismatch(rpc_port),
-    rpc_wallet_file: literal(rpc_wallet_file).onMismatch(rpc_wallet_file),
-    rpc_host: literal(rpc_host).onMismatch(rpc_host),
-    rpc_cookie_file: literal(rpc_cookie_file).onMismatch(rpc_cookie_file),
-  }),
+    rpc_port: literal(rpc_port),
+    rpc_wallet_file: literal(rpc_wallet_file),
+    rpc_host: literal(rpc_host),
+    rpc_cookie_file: literal(rpc_cookie_file),
+  }).onMismatch(configDefaults.BLOCKCHAIN),
   'MESSAGING:onion': object({
     socks5_host: string,
   }).optional(),

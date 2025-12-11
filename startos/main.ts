@@ -13,9 +13,6 @@ export const main = sdk.setupMain(async ({ effects, started }) => {
    */
   console.info('Starting Jam!')
 
-  const depResult = await sdk.checkDependencies(effects)
-  depResult.throwIfNotSatisfied()
-
   const osIp = await sdk.getOsIp(effects)
 
   await joinmarketCfg.merge(effects, {
@@ -37,12 +34,6 @@ export const main = sdk.setupMain(async ({ effects, started }) => {
     effects,
     { imageId: 'jam' },
     sdk.Mounts.of()
-      .mountVolume({
-        volumeId: 'main',
-        subpath: null,
-        mountpoint: '/data',
-        readonly: false,
-      })
       .mountVolume({
         volumeId: 'jam',
         subpath: null,
