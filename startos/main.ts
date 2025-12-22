@@ -1,11 +1,9 @@
 import { sdk } from './sdk'
-import { FileHelper } from '@start9labs/start-sdk'
 import { APP_USER, uiPort } from './utils'
-import { manifest } from 'bitcoind-startos/startos/manifest'
 import { joinmarketCfg } from './fileModels/joinmarket.cfg'
-import { store } from './fileModels/store.json'
+import { storeJson } from './fileModels/store.json'
 
-export const main = sdk.setupMain(async ({ effects, started }) => {
+export const main = sdk.setupMain(async ({ effects }) => {
   /**
    * ======================== Setup (optional) ========================
    *
@@ -25,35 +23,11 @@ export const main = sdk.setupMain(async ({ effects, started }) => {
   })
 
   // read joinmarketCfg to restart service on change
-  const config = await joinmarketCfg.read().const(effects)
-  if (!config) throw new Error('joinmarket config not found!')
+  // const config = await joinmarketCfg.read().const(effects)
+  // if (!config) throw new Error('joinmarket config not found!')
 
-  const APP_PASSWORD = (await store.read((s) => s.password).const(effects))!
-
-  const jamSub = await sdk.SubContainer.of(
-    effects,
-    { imageId: 'jam' },
-    sdk.Mounts.of()
-      .mountVolume({
-        volumeId: 'jam',
-        subpath: null,
-        mountpoint: '/root/.joinmarket',
-        readonly: false,
-      })
-      .mountDependency<typeof manifest>({
-        dependencyId: 'bitcoind',
-        volumeId: 'main',
-        subpath: null,
-        mountpoint: '/mnt/bitcoind',
-        readonly: true,
-      }),
-    'jam-sub',
-  )
-
-  // Restart if cookie changes
-  await FileHelper.string(`${jamSub.rootfs}/mnt/bitcoind/.cookie`)
-    .read()
-    .const(effects)
+  const APP_PASSWORD = await storeJson.read((s) => s.password).const(effects)
+  if (!APP_PASSWORD) throw new Error('no password')
 
   /**
    * ======================== Daemons ========================
@@ -62,20 +36,26 @@ export const main = sdk.setupMain(async ({ effects, started }) => {
    *
    * Each daemon defines its own health check, which can optionally be exposed to the user.
    */
-  return sdk.Daemons.of(effects, started).addDaemon('primary', {
-    subcontainer: jamSub,
+  return sdk.Daemons.of(effects).addDaemon('primary', {
+    subcontainer: await sdk.SubContainer.of(
+      effects,
+      { imageId: 'jam' },
+      sdk.Mounts.of().mountVolume({
+        volumeId: 'jam',
+        subpath: null,
+        mountpoint: '/root/.joinmarket',
+        readonly: false,
+      }),
+      'jam-sub',
+    ),
     exec: {
       command: sdk.useEntrypoint(),
+      runAsInit: true,
       env: {
         APP_USER,
         APP_PASSWORD,
-        JM_RPC_HOST: config.BLOCKCHAIN.rpc_host,
-        JM_RPC_PORT: config.BLOCKCHAIN.rpc_port,
-        JM_RPC_COOKIE_FILE: config.BLOCKCHAIN.rpc_cookie_file,
-        JM_RPC_WALLET_FILE: config.BLOCKCHAIN.rpc_wallet_file,
         ENSURE_WALLET: 'true',
         REMOVE_LOCK_FILES: 'true',
-        RESTORE_DEFAULT_CONFIG: 'false',
       },
     },
     ready: {

@@ -11,15 +11,15 @@ export const manifest = setupManifest({
   donationUrl: null,
   docsUrl: 'https://github.com/Start9Labs/jam-startos/docs/instructions.md',
   description: {
-    short: 'A web user interface for JoinMarket.',
-    long: 'Jam is a web interface for JoinMarket focusing on user-friendliness and ease-of-use. It aims to provide sensible defaults and be easy to use for beginners while still having the features advanced users expect.',
+    short: 'JoinMarket server with web UI',
+    long: 'Jam is Joinmarket plus a web user interface for JoinMarket focusing on user-friendliness and ease-of-use. It aims to provide sensible defaults and be easy to use for beginners while still having the features advanced users expect.',
   },
   volumes: ['main', 'jam'],
   images: {
     jam: {
       source: {
         dockerTag:
-          'ghcr.io/joinmarket-webui/jam-dev-standalone:master@sha256:74173a587d2e0226478d3a856c768debaeac990b2064294d9839037e793fc671',
+          'ghcr.io/joinmarket-webui/jam-standalone:v0.4.1-clientserver-v0.9.11',
       },
     },
   },
@@ -36,7 +36,7 @@ export const manifest = setupManifest({
       description: 'Used to subscribe to new block events.',
       optional: false,
       metadata: {
-        title: 'A Bitcoin Full Node',
+        title: 'Bitcoin',
         icon: 'https://bitcoin.org/img/icons/opengraph.png',
       },
     },

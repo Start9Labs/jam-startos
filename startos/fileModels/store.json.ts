@@ -3,10 +3,10 @@ import { matches, FileHelper } from '@start9labs/start-sdk'
 const { object, string } = matches
 
 const shape = object({
-  password: string.onMismatch(''),
+  password: string.optional().onMismatch(undefined),
 })
 
-export const store = FileHelper.json(
+export const storeJson = FileHelper.json(
   { volumeId: 'main', subpath: './store.json' },
   shape,
 )

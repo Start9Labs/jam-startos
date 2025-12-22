@@ -1,7 +1,6 @@
-import { utils } from '@start9labs/start-sdk'
 import { sdk } from '../sdk'
-import { APP_USER } from '../utils'
-import { store } from '../fileModels/store.json'
+import { APP_USER, randomPassword } from '../utils'
+import { storeJson } from '../fileModels/store.json'
 
 export const resetPassword = sdk.Action.withoutInput(
   // id
@@ -9,7 +8,7 @@ export const resetPassword = sdk.Action.withoutInput(
 
   // metadata
   async ({ effects }) => {
-    const hasPass = await store.read((s) => s.password).const(effects)
+    const hasPass = await storeJson.read((s) => s.password).const(effects)
     const desc = 'your Jam password'
 
     return {
@@ -24,12 +23,9 @@ export const resetPassword = sdk.Action.withoutInput(
 
   // the execution function
   async ({ effects }) => {
-    const password = utils.getDefaultString({
-      charset: 'a-z,A-Z,1-9,!,@,$,%,&,*',
-      len: 22,
-    })
+    const password = randomPassword()
 
-    await store.merge(effects, { password })
+    await storeJson.merge(effects, { password })
 
     return {
       version: '1',
