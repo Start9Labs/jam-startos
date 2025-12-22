@@ -1,12 +1,13 @@
-import { VersionGraph } from '@start9labs/start-sdk'
+import { utils, VersionGraph } from '@start9labs/start-sdk'
 import { current, other } from './versions'
-import { joinmarketCfg } from '../fileModels/joinmarket.cfg'
-import { configDefaults } from '../utils'
+import { storeJson } from '../fileModels/store.json'
 
 export const versionGraph = VersionGraph.of({
   current,
   other,
   preInstall: async (effects) => {
-    await joinmarketCfg.write(effects, configDefaults)
+    await storeJson.write(effects, {
+      jamInstanceId: `jam_${utils.getDefaultString({ charset: 'a-z,A-Z', len: 9 })}`,
+    })
   },
 })

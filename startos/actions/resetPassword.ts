@@ -8,7 +8,7 @@ export const resetPassword = sdk.Action.withoutInput(
 
   // metadata
   async ({ effects }) => {
-    const hasPass = await storeJson.read((s) => s.password).const(effects)
+    const hasPass = await storeJson.read((s) => s.APP_PASSWORD).const(effects)
     const desc = 'your Jam password'
 
     return {
@@ -23,9 +23,9 @@ export const resetPassword = sdk.Action.withoutInput(
 
   // the execution function
   async ({ effects }) => {
-    const password = randomPassword()
+    const APP_PASSWORD = randomPassword()
 
-    await storeJson.merge(effects, { password })
+    await storeJson.merge(effects, { APP_PASSWORD })
 
     return {
       version: '1',
@@ -40,7 +40,7 @@ export const resetPassword = sdk.Action.withoutInput(
             name: 'Username',
             description: null,
             value: APP_USER,
-            masked: true,
+            masked: false,
             copyable: true,
             qr: false,
           },
@@ -48,7 +48,7 @@ export const resetPassword = sdk.Action.withoutInput(
             type: 'single',
             name: 'Password',
             description: null,
-            value: password,
+            value: APP_PASSWORD,
             masked: true,
             copyable: true,
             qr: false,

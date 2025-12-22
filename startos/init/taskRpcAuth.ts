@@ -1,20 +1,18 @@
-import { utils } from '@start9labs/start-sdk'
 import { sdk } from '../sdk'
 import { generateRpcUserDependent } from 'bitcoind-startos/startos/actions/generateRpcUserDependent'
-import { joinmarketCfg } from '../fileModels/joinmarket.cfg'
 import { randomPassword } from '../utils'
+import { storeJson } from '../fileModels/store.json'
 
 export const taskRpcAuth = sdk.setupOnInit(async (effects) => {
-  const rpc = await joinmarketCfg
+  const store = await storeJson
     .read((s) => ({
-      user: s.BLOCKCHAIN.rpc_user,
-      password: s.BLOCKCHAIN.rpc_password,
+      jamInstanceId: s.jamInstanceId,
+      password: s.JM_RPC_PASSWORD,
     }))
     .const(effects)
 
-  if (!rpc || !rpc.user || !rpc.password) {
-    const rpc_user = `jam_${utils.getDefaultString({ charset: 'a-z,A-Z', len: 8 })}`
-    const rpc_password = randomPassword()
+  if (!store?.password) {
+    const JM_RPC_PASSWORD = randomPassword()
 
     await sdk.action.createTask(
       effects,
@@ -25,21 +23,18 @@ export const taskRpcAuth = sdk.setupOnInit(async (effects) => {
         input: {
           kind: 'partial',
           value: {
-            username: rpc_user,
-            password: rpc_password,
+            username: store?.jamInstanceId,
+            password: JM_RPC_PASSWORD,
           },
         },
         reason: 'Jam needs an RPC user in Bitcoin',
       },
     )
 
-    await joinmarketCfg.merge(
+    await storeJson.merge(
       effects,
       {
-        BLOCKCHAIN: {
-          rpc_user,
-          rpc_password,
-        },
+        JM_RPC_PASSWORD,
       },
       { allowWriteAfterConst: true },
     )

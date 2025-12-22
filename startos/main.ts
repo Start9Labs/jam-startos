@@ -1,6 +1,5 @@
 import { sdk } from './sdk'
 import { APP_USER, uiPort } from './utils'
-import { joinmarketCfg } from './fileModels/joinmarket.cfg'
 import { storeJson } from './fileModels/store.json'
 
 export const main = sdk.setupMain(async ({ effects }) => {
@@ -11,23 +10,10 @@ export const main = sdk.setupMain(async ({ effects }) => {
    */
   console.info('Starting Jam!')
 
-  const osIp = await sdk.getOsIp(effects)
+  const store = await storeJson.read().const(effects)
+  if (!store) throw new Error('no store')
 
-  await joinmarketCfg.merge(effects, {
-    'MESSAGING:onion': {
-      socks5_host: osIp,
-    },
-    'MESSAGING:hackint': {
-      socks5_host: osIp,
-    },
-  })
-
-  // read joinmarketCfg to restart service on change
-  // const config = await joinmarketCfg.read().const(effects)
-  // if (!config) throw new Error('joinmarket config not found!')
-
-  const APP_PASSWORD = await storeJson.read((s) => s.password).const(effects)
-  if (!APP_PASSWORD) throw new Error('no password')
+  const { APP_PASSWORD, JM_RPC_PASSWORD, jamInstanceId } = store
 
   /**
    * ======================== Daemons ========================
@@ -56,6 +42,11 @@ export const main = sdk.setupMain(async ({ effects }) => {
         APP_PASSWORD,
         ENSURE_WALLET: 'true',
         REMOVE_LOCK_FILES: 'true',
+        JM_RPC_USER: jamInstanceId,
+        JM_RPC_PASSWORD,
+        JM_RPC_HOST: 'bitcoind.startos',
+        JM_RPC_PORT: '8332',
+        JM_RPC_WALLET_FILE: jamInstanceId,
       },
     },
     ready: {
