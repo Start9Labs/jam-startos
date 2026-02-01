@@ -1,4 +1,5 @@
 import { setupManifest } from '@start9labs/start-sdk'
+import i18n from './i18n'
 
 export const manifest = setupManifest({
   id: 'jam',
@@ -10,10 +11,7 @@ export const manifest = setupManifest({
   marketingSite: 'https://jamapp.org',
   donationUrl: null,
   docsUrl: 'https://github.com/Start9Labs/jam-startos/docs/instructions.md',
-  description: {
-    short: 'JoinMarket server with web UI',
-    long: 'Jam is Joinmarket plus a web user interface for JoinMarket focusing on user-friendliness and ease-of-use. It aims to provide sensible defaults and be easy to use for beginners while still having the features advanced users expect.',
-  },
+  description: i18n.description,
   volumes: ['main', 'jam'],
   images: {
     jam: {
@@ -21,15 +19,8 @@ export const manifest = setupManifest({
         dockerTag:
           'ghcr.io/joinmarket-webui/jam-standalone:v0.4.1-clientserver-v0.9.11',
       },
+      arch: ['x86_64', 'aarch64'],
     },
-  },
-  alerts: {
-    install: null,
-    update: null,
-    uninstall: null,
-    restore: null,
-    start: null,
-    stop: null,
   },
   dependencies: {
     bitcoind: {

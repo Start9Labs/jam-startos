@@ -1,4 +1,5 @@
 import { matches, FileHelper } from '@start9labs/start-sdk'
+import { sdk } from '../sdk'
 
 const { object, string } = matches
 
@@ -10,7 +11,7 @@ const shape = object({
 
 export const joinmarketCfg = FileHelper.ini(
   {
-    volumeId: 'jam',
+    base: sdk.volumes.jam,
     subpath: './joinmarket.cfg',
   },
   shape,

@@ -1,6 +1,7 @@
 import { sdk } from './sdk'
 import { APP_USER, uiPort } from './utils'
 import { storeJson } from './fileModels/store.json'
+import { i18n } from './i18n'
 
 export const main = sdk.setupMain(async ({ effects }) => {
   /**
@@ -8,10 +9,10 @@ export const main = sdk.setupMain(async ({ effects }) => {
    *
    * In this section, we fetch any resources or run any desired preliminary commands.
    */
-  console.info('Starting Jam!')
+  console.info(i18n('Starting Jam!'))
 
   const store = await storeJson.read().const(effects)
-  if (!store) throw new Error('no store')
+  if (!store) throw new Error(i18n('no store'))
 
   const { APP_PASSWORD, JM_RPC_PASSWORD, jamInstanceId } = store
 
@@ -50,11 +51,11 @@ export const main = sdk.setupMain(async ({ effects }) => {
       },
     },
     ready: {
-      display: 'Web Interface',
+      display: i18n('Web Interface'),
       fn: () =>
         sdk.healthCheck.checkPortListening(effects, uiPort, {
-          successMessage: 'The web interface is ready',
-          errorMessage: 'The web interface is not ready',
+          successMessage: i18n('The web interface is ready'),
+          errorMessage: i18n('The web interface is not ready'),
         }),
     },
     requires: [],
