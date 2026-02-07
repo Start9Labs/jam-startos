@@ -10,7 +10,7 @@ export const manifest = setupManifest({
   supportSite: 'https://github.com/joinmarket-webui/jam/issues',
   marketingSite: 'https://jamapp.org',
   donationUrl: null,
-  docsUrl: 'https://github.com/Start9Labs/jam-startos/docs/instructions.md',
+  docsUrl: 'https://jamdocs.org/',
   description: i18n.description,
   volumes: ['main', 'jam'],
   images: {
