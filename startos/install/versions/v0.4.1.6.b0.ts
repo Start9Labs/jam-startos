@@ -2,8 +2,8 @@ import { VersionInfo, IMPOSSIBLE, YAML } from '@start9labs/start-sdk'
 import { readFile, rm } from 'fs/promises'
 import { storeJson } from '../../fileModels/store.json'
 
-export const v_0_4_1_5_b0 = VersionInfo.of({
-  version: '0.4.1:5-beta.0',
+export const v_0_4_1_6_b0 = VersionInfo.of({
+  version: '0.4.1:6-beta.0',
   releaseNotes: {
     en_US: 'Updated StartOS packaging',
     es_ES: 'Actualizado el empaquetado de StartOS',

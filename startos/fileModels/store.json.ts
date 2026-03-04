@@ -1,12 +1,10 @@
-import { matches, FileHelper } from '@start9labs/start-sdk'
+import { FileHelper, z } from '@start9labs/start-sdk'
 import { sdk } from '../sdk'
 
-const { object, string } = matches
-
-const shape = object({
-  APP_PASSWORD: string.optional().onMismatch(undefined),
-  JM_RPC_PASSWORD: string.optional().onMismatch(undefined),
-  jamInstanceId: string,
+const shape = z.object({
+  APP_PASSWORD: z.string().optional(),
+  JM_RPC_PASSWORD: z.string().optional(),
+  jamInstanceId: z.string(),
 })
 
 export const storeJson = FileHelper.json(

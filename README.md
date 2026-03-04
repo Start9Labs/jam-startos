@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="icon.png" alt="Jam Logo" width="21%">
+  <img src="icon.svg" alt="Jam Logo" width="21%">
 </p>
 
 # Jam on StartOS
@@ -7,8 +7,8 @@
 > **Upstream docs:** <https://jamdocs.org/>
 >
 > Everything not listed in this document should behave the same as upstream
-> Jam v0.4.1 with JoinMarket v0.9.11. If a feature, setting, or behavior is not mentioned
-> here, the upstream documentation is accurate and fully applicable.
+> Jam. If a feature, setting, or behavior is not mentioned here, the upstream
+> documentation is accurate and fully applicable.
 
 [Jam](https://github.com/joinmarket-webui/jam) is a web interface for JoinMarket, a privacy-focused Bitcoin software that enables collaborative transactions (CoinJoins). JoinMarket is completely peer-to-peer with no central coordinator.
 
@@ -142,9 +142,9 @@ All JoinMarket settings are configured through the Jam web interface:
 
 | Dependency | Required | Version | Health Check |
 |------------|----------|---------|--------------|
-| Bitcoin Core | Yes | `^29.2:2-beta.2` | sync-progress |
+| Bitcoin Core | Yes | `>=28.3 <30.0` | bitcoind, sync-progress |
 
-**Important:** Jam requires Bitcoin Core v29.x. It is currently incompatible with Bitcoin Core v30+ due to BDB wallet requirements.
+**Important:** Jam requires Bitcoin Core v28.3 or v29.x. It is incompatible with Bitcoin Core v30+ due to BDB wallet requirements.
 
 **Auto-configuration:**
 
@@ -186,7 +186,7 @@ All JoinMarket settings are configured through the Jam web interface:
 
 ## Limitations and Differences
 
-1. **Bitcoin Core v29 required** — Incompatible with v30+ due to BDB wallet dependency
+1. **Bitcoin Core v28.3/v29.x required** — Incompatible with v30+ due to BDB wallet dependency
 2. **Username fixed** — Always `jam`; only password can be changed
 3. **Auto-configured RPC** — Cannot manually configure Bitcoin Core connection
 
@@ -227,8 +227,8 @@ ports:
 dependencies:
   bitcoind:
     required: true
-    version: "^29.2:2-beta.2"
-    health_check: sync-progress
+    version: ">=28.3 <30.0"
+    health_check: [bitcoind, sync-progress]
     note: Incompatible with Bitcoin Core v30+ (BDB wallet requirement)
 auto_config:
   JM_RPC_HOST: bitcoind.startos

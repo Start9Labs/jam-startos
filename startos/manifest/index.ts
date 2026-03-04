@@ -1,16 +1,15 @@
 import { setupManifest } from '@start9labs/start-sdk'
-import i18n from './i18n'
+import i18n, { depBitcoindDescription } from './i18n'
 
 export const manifest = setupManifest({
   id: 'jam',
   title: 'Jam',
   license: 'mit',
-  wrapperRepo: 'https://github.com/Start9Labs/jam-startos',
+  packageRepo: 'https://github.com/Start9Labs/jam-startos/tree/update/040',
   upstreamRepo: 'https://github.com/joinmarket-webui/jam-docker',
-  supportSite: 'https://github.com/joinmarket-webui/jam/issues',
-  marketingSite: 'https://jamapp.org',
+  marketingUrl: 'https://jamapp.org',
   donationUrl: null,
-  docsUrl: 'https://jamdocs.org/',
+  docsUrls: ['https://jamdocs.org/'],
   description: i18n.description,
   volumes: ['main', 'jam'],
   images: {
@@ -24,11 +23,11 @@ export const manifest = setupManifest({
   },
   dependencies: {
     bitcoind: {
-      description: 'Used to subscribe to new block events.',
+      description: depBitcoindDescription,
       optional: false,
       metadata: {
         title: 'Bitcoin',
-        icon: 'https://bitcoin.org/img/icons/opengraph.png',
+        icon: 'https://raw.githubusercontent.com/Start9Labs/bitcoin-core-startos/feec0b1dae42961a257948fe39b40caf8672fce1/dep-icon.svg',
       },
     },
   },
