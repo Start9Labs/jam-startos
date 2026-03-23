@@ -216,8 +216,7 @@ See [CONTRIBUTING.md](CONTRIBUTING.md) for build instructions and development wo
 
 ```yaml
 package_id: jam
-upstream_version: 0.4.1 (JoinMarket 0.9.11)
-image: ghcr.io/joinmarket-webui/jam-standalone:v0.4.1-clientserver-v0.9.11
+image: ghcr.io/joinmarket-webui/jam-standalone
 architectures: [x86_64, aarch64]
 volumes:
   main: (StartOS state)
