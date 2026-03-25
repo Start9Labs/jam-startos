@@ -9,9 +9,9 @@ import { taskSetPassword } from './taskSetPassword'
 import { taskRpcAuth } from './taskRpcAuth'
 
 export const init = sdk.setupInit(
-  seedFiles,
   restoreInit,
   versionGraph,
+  seedFiles,
   setInterfaces,
   setDependencies,
   actions,
