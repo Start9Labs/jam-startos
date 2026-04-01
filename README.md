@@ -38,7 +38,7 @@
 
 | Property | Value |
 |----------|-------|
-| Image | `ghcr.io/joinmarket-webui/jam-standalone:v0.4.1-clientserver-v0.9.11` |
+| Image | `ghcr.io/joinmarket-webui/jam-standalone` (upstream unmodified) |
 | Architectures | x86_64, aarch64 |
 
 This is the upstream standalone image containing both Jam UI and JoinMarket backend.
@@ -140,17 +140,17 @@ All JoinMarket settings are configured through the Jam web interface:
 
 ## Dependencies
 
-| Dependency | Required | Version | Health Check |
-|------------|----------|---------|--------------|
-| Bitcoin Core | Yes | `>=28.3 <30.0` | bitcoind, sync-progress |
+### Bitcoin Core
 
-**Important:** Jam requires Bitcoin Core v28.3 or v29.x. It is incompatible with Bitcoin Core v30+ due to BDB wallet requirements.
+| Property | Value |
+|----------|-------|
+| Required | Yes |
+| Version constraint | `>= 28.3, < 30.0` |
+| Health checks | `bitcoind`, `sync-progress` |
+| Mounted volumes | None (accessed via RPC) |
+| Purpose | Blockchain data and wallet operations via RPC |
 
-**Auto-configuration:**
-
-- Jam creates a dedicated wallet in Bitcoin Core
-- RPC credentials are configured automatically
-- No manual Bitcoin Core configuration needed
+Jam requires a compatible version of Bitcoin Core with BDB wallet support. RPC credentials and a dedicated wallet are configured automatically.
 
 ---
 
@@ -186,7 +186,7 @@ All JoinMarket settings are configured through the Jam web interface:
 
 ## Limitations and Differences
 
-1. **Bitcoin Core v28.3/v29.x required** — Incompatible with v30+ due to BDB wallet dependency
+1. **Bitcoin Core version restricted** — Requires a version with BDB wallet support; incompatible with newer versions that removed it
 2. **Username fixed** — Always `jam`; only password can be changed
 3. **Auto-configured RPC** — Cannot manually configure Bitcoin Core connection
 
@@ -228,7 +228,16 @@ dependencies:
     required: true
     version: ">=28.3 <30.0"
     health_check: [bitcoind, sync-progress]
-    note: Incompatible with Bitcoin Core v30+ (BDB wallet requirement)
+startos_managed_env_vars:
+  - APP_USER
+  - APP_PASSWORD
+  - JM_RPC_HOST
+  - JM_RPC_PORT
+  - JM_RPC_USER
+  - JM_RPC_PASSWORD
+  - JM_RPC_WALLET_FILE
+  - ENSURE_WALLET
+  - REMOVE_LOCK_FILES
 auto_config:
   JM_RPC_HOST: bitcoind.startos
   JM_RPC_PORT: "8332"
