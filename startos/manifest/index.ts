@@ -5,7 +5,7 @@ export const manifest = setupManifest({
   id: 'jam',
   title: 'Jam',
   license: 'mit',
-  packageRepo: 'https://github.com/Start9Labs/jam-startos/tree/update/040',
+  packageRepo: 'https://github.com/Start9Labs/jam-startos',
   upstreamRepo: 'https://github.com/joinmarket-webui/jam-docker',
   marketingUrl: 'https://jamapp.org',
   donationUrl: null,
