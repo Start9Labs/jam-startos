@@ -1,5 +1,5 @@
 import { sdk } from '../sdk'
-import { generateRpcUserDependent } from 'bitcoind-startos/startos/actions/generateRpcUserDependent'
+import { generateRpcUserDependent } from 'bitcoin-core-startos/startos/actions/generateRpcUserDependent'
 import { randomPassword } from '../utils'
 import { storeJson } from '../fileModels/store.json'
 import { i18n } from '../i18n'
